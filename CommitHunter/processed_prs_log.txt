@@ -1,0 +1,131 @@
+PR #22302: Revert "Fix compressedref ibm 8 tests native path" (Culprit SHA Found: 7bf7a60afa) - URL: https://github.com/eclipse-openj9/openj9/pull/22302
+PR #22185: Revert "Remove unused DDR tool and test" (Culprit SHA Found: 3036448671) - URL: https://github.com/eclipse-openj9/openj9/pull/22185
+PR #22169: Revert "Support using newer versions of cmake" (Culprit SHA Found: 3026071392) - URL: https://github.com/eclipse-openj9/openj9/pull/22169
+PR #22051: Revert "Box and unbox all types in VectorAPIExpansion" (Culprit SHA Found: 2945589884) - URL: https://github.com/eclipse-openj9/openj9/pull/22051
+PR #21965: Revert "x86: Reduce AVX-SSE mixing penalties" (Culprit SHA Found: 2914042755) - URL: https://github.com/eclipse-openj9/openj9/pull/21965
+PR #21902: Revert "Pop extra args on BootstrapMethodError for invokedynamic" (Culprit SHA Found: 2887444489) - URL: https://github.com/eclipse-openj9/openj9/pull/21902
+PR #21752: (0.51) Revert "Merge pull request #21056 from vijaysun-omr/jprofiling1" (Culprit SHA Found: 8bbc086990) - URL: https://github.com/eclipse-openj9/openj9/pull/21752
+PR #21664: Fix non-contiguous field only if base value number matches candidate (Culprit SHA Found: c2a5143065) - URL: https://github.com/eclipse-openj9/openj9/pull/21664
+PR #21551: Revert "Enable off-heap as default on Balanced GC" (Culprit SHA Found: 2772666915) - URL: https://github.com/eclipse-openj9/openj9/pull/21551
+PR #21377: (0.51) Revert "x86: Implement String.hashCode with vectorizedHashCode()" (Culprit SHA Found: 1bae589) - URL: https://github.com/eclipse-openj9/openj9/pull/21377
+PR #21350: (0.51) Virtual Threads: Bug fixes for JEP491 (Culprit SHA Found: 52f247c234) - URL: https://github.com/eclipse-openj9/openj9/pull/21350
+PR #21342: Virtual Threads: Bug fixes for JEP491 (Culprit SHA Found: 52f247c234) - URL: https://github.com/eclipse-openj9/openj9/pull/21342
+PR #21313: Revert "Implement JVM_GetProperties for jdk17+" (Culprit SHA Found: 2707706009) - URL: https://github.com/eclipse-openj9/openj9/pull/21313
+PR #21310: Revert "x86: check xcr0 in AOT compiles" (Culprit SHA Found: 2707445838) - URL: https://github.com/eclipse-openj9/openj9/pull/21310
+PR #21305: Revert "Enable offheap on X and P" (Culprit SHA Found: 2706438373) - URL: https://github.com/eclipse-openj9/openj9/pull/21305
+PR #21199: Revert "x86: Implement String.hashCode with vectorizedHashCode()" (Culprit SHA Found: 2686054278) - URL: https://github.com/eclipse-openj9/openj9/pull/21199
+PR #21184: Fix P allocationInlining OffHeap len cmp to use cmp4 instead of cmp8 (Culprit SHA Found: 211a8e1b) - URL: https://github.com/eclipse-openj9/openj9/pull/21184
+PR #20701: Revert "Merge pull request #20525" (Culprit SHA Found: edccce1ec1) - URL: https://github.com/eclipse-openj9/openj9/pull/20701
+PR #20579: Revert "Make j9localmap_DebugLocalBitsForPC the default mapper" (Culprit SHA Found: 2470939347) - URL: https://github.com/eclipse-openj9/openj9/pull/20579
+PR #20452: Revert "Support Java Behaviour w.r.t Math.max and Math.min for Floating Points" (Culprit SHA Found: 2448313768) - URL: https://github.com/eclipse-openj9/openj9/pull/20452
+PR #20393: Update OpenSSL 3.0.15 to include the fix for CVE-2024-9143 (Culprit SHA Found: 20241016) - URL: https://github.com/eclipse-openj9/openj9/pull/20393
+PR #20363: (0.48) Fix overflow issues (Culprit SHA Found: 8338709) - URL: https://github.com/eclipse-openj9/openj9/pull/20363
+PR #20362: Fix overflow issues (Culprit SHA Found: 8338709) - URL: https://github.com/eclipse-openj9/openj9/pull/20362
+PR #19646: Fix Valhalla test compilation (Culprit SHA Found: 2099915816) - URL: https://github.com/eclipse-openj9/openj9/pull/19646
+PR #20190: (v0.48.0) Fix testXXArgumentTesting (Culprit SHA Found: 4a6636a98f) - URL: https://github.com/eclipse-openj9/openj9/pull/20190
+PR #20109: Revert "Value type null-restricted array support" (Culprit SHA Found: 2327721469) - URL: https://github.com/eclipse-openj9/openj9/pull/20109
+PR #19802: Fix various cast errors (Culprit SHA Found: 2147483647) - URL: https://github.com/eclipse-openj9/openj9/pull/19802
+PR #19667: Fix vectorAPI address node helper after offheap changes (Culprit SHA Found: 566a656bec) - URL: https://github.com/eclipse-openj9/openj9/pull/19667
+PR #19593: Fix issues with "Value class is indicated by missing ACC_IDENTITY" (Culprit SHA Found: 2091326881) - URL: https://github.com/eclipse-openj9/openj9/pull/19593
+PR #19535: Revert "Optimize OpenJDK VarHandle operation methods" (Culprit SHA Found: 2125836187) - URL: https://github.com/eclipse-openj9/openj9/pull/19535
+PR #19478: Fix View-LE-OnHeap and View-BE-OnHeap for JDK23 (Culprit SHA Found: 4c9db1a) - URL: https://github.com/eclipse-openj9/openj9/pull/19478
+PR #19375: Fix the VarHandle test for JDK23 (Culprit SHA Found: 4c9db1acce) - URL: https://github.com/eclipse-openj9/openj9/pull/19375
+PR #19317: Revert "Add test pipeline parameters" (#19281) (Culprit SHA Found: 0f40abf364) - URL: https://github.com/eclipse-openj9/openj9/pull/19317
+PR #19213: (0.44) Avoid heap walk and GC for MemberName fix-up on class redefinition (Culprit SHA Found: e06a34ca51) - URL: https://github.com/eclipse-openj9/openj9/pull/19213
+PR #19155: Revert "Replace omrvm to javavm for RootScanner class" (Culprit SHA Found: 1998677574) - URL: https://github.com/eclipse-openj9/openj9/pull/19155
+PR #18981: Revert "Recognize java/lang/StringCoding.implEncodeAsciiArray" (Culprit SHA Found: 4335656433) - URL: https://github.com/eclipse-openj9/openj9/pull/18981
+PR #18843: Revert "Modify SCC frontend to take class parameter" (Culprit SHA Found: 2abc8e7e63) - URL: https://github.com/eclipse-openj9/openj9/pull/18843
+PR #18736: Fix asm.jar path mismatch in valuetype tests (Culprit SHA Found: 1885142840) - URL: https://github.com/eclipse-openj9/openj9/pull/18736
+PR #18662: (0.42) Fix GetThreadStateTest (Culprit SHA Found: dfb02ce314) - URL: https://github.com/eclipse-openj9/openj9/pull/18662
+PR #18661: (0.43) Fix GetThreadStateTest (Culprit SHA Found: ad84af2bb2) - URL: https://github.com/eclipse-openj9/openj9/pull/18661
+PR #18660: Fix GetThreadStateTest (Culprit SHA Found: 5bb307a7b7) - URL: https://github.com/eclipse-openj9/openj9/pull/18660
+PR #18637: Fix PowerPC specific issues (Culprit SHA Found: 1843799810) - URL: https://github.com/eclipse-openj9/openj9/pull/18637
+PR #18266: Fix comparison of non-pointer to NULL (Culprit SHA Found: 4aa604baf1) - URL: https://github.com/eclipse-openj9/openj9/pull/18266
+PR #18344: Fix mismatched JITServer message type (Culprit SHA Found: 06c3abcca7) - URL: https://github.com/eclipse-openj9/openj9/pull/18344
+PR #18225: Fix Criu test failures for JITServer SSL Tests (Culprit SHA Found: 3450382) - URL: https://github.com/eclipse-openj9/openj9/pull/18225
+PR #18010: Revert "Update the assert to allow TR_UnloadedClassPicSite" (Culprit SHA Found: 1691515317) - URL: https://github.com/eclipse-openj9/openj9/pull/18010
+PR #17999: [JDK21] Fix jvmtiSuspendThread and jvmtiGetCarrierThread  (Culprit SHA Found: b19e7dcb36) - URL: https://github.com/eclipse-openj9/openj9/pull/17999
+PR #17963: Revert "Add DDR command continuationstack" (Culprit SHA Found: 1679510494) - URL: https://github.com/eclipse-openj9/openj9/pull/17963
+PR #8230: Fix Class.getMethod() and Class.getMethods() missing cases (Culprit SHA Found: 567709614) - URL: https://github.com/eclipse-openj9/openj9/pull/8230
+PR #11513: Revert delay liveness analysis change (Culprit SHA Found: 567c5898fc) - URL: https://github.com/eclipse-openj9/openj9/pull/11513
+PR #17439: Revert "(0.39) Sync JVM init and exit paths" (Culprit SHA Found: 1554619587) - URL: https://github.com/eclipse-openj9/openj9/pull/17439
+PR #17438: Revert "Sync JVM init and exit paths" (Culprit SHA Found: 1554619587) - URL: https://github.com/eclipse-openj9/openj9/pull/17438
+PR #17403: Fix handling of IPv6 addressed (Culprit SHA Found: 1545801256) - URL: https://github.com/eclipse-openj9/openj9/pull/17403
+PR #14432: Fix check in trcModulesAddReadsModule function (Culprit SHA Found: 1026786169) - URL: https://github.com/eclipse-openj9/openj9/pull/14432
+PR #16897: Revert "Handle convert intrinsic in VectorAPIExpansion" (Culprit SHA Found: bc3e8a9d68) - URL: https://github.com/eclipse-openj9/openj9/pull/16897
+PR #16697: Revert "Add unit test for accelerated CRC32C.update on Z" (Culprit SHA Found: 1424838045) - URL: https://github.com/eclipse-openj9/openj9/pull/16697
+PR #16597: Revert "Temporarily avoid zlinux jdk11+ testing on RH8" (Culprit SHA Found: 1401302242) - URL: https://github.com/eclipse-openj9/openj9/pull/16597
+PR #16467: Fix String.split when regex is compressed and searched string is not (Culprit SHA Found: 1349617176) - URL: https://github.com/eclipse-openj9/openj9/pull/16467
+PR #16485: Fix missing parameter for scanContinuationNativeSlots (Culprit SHA Found: 1331427527) - URL: https://github.com/eclipse-openj9/openj9/pull/16485
+PR #16406: Fix bug while computing effective caller index (Culprit SHA Found: 9f404bec67) - URL: https://github.com/eclipse-openj9/openj9/pull/16406
+PR #16308: Revert "Stack walk loop breaker for ASGCT" (Culprit SHA Found: 1311000974) - URL: https://github.com/eclipse-openj9/openj9/pull/16308
+PR #16087: Fix Continuation collection issue (Culprit SHA Found: 1271956260) - URL: https://github.com/eclipse-openj9/openj9/pull/16087
+PR #15910: Fix warnings in jdknext classified as "lossy-conversions" (Culprit SHA Found: e90c809e0e) - URL: https://github.com/eclipse-openj9/openj9/pull/15910
+PR #15834: (0.35) Update zlib to fix CVE-2022-37434 (Culprit SHA Found: eff308af42) - URL: https://github.com/eclipse-openj9/openj9/pull/15834
+PR #15829: Update zlib to fix CVE-2022-37434 (Culprit SHA Found: eff308af42) - URL: https://github.com/eclipse-openj9/openj9/pull/15829
+PR #15448: Revert "jilconst: don't redefine OMR_GC_CONCURRENT_SCAVENGER" (Culprit SHA Found: 1168914790) - URL: https://github.com/eclipse-openj9/openj9/pull/15448
+PR #15430: Revert "Refactor TR::DefaultCompilationStrategy::processJittedSample" (Culprit SHA Found: 1167384633) - URL: https://github.com/eclipse-openj9/openj9/pull/15430
+PR #15350: CRIU fix Timer.schedule test and show checkpointRestoreTimeDelta value (Culprit SHA Found: 1157549598) - URL: https://github.com/eclipse-openj9/openj9/pull/15350
+PR #6886: (v0.16.0) Restrict fixing simple name to JDK8 (Culprit SHA Found: 5844a1d4) - URL: https://github.com/eclipse-openj9/openj9/pull/6886
+PR #6869: Restrict fixing simple name to JDK8 (Culprit SHA Found: 5844a1d4) - URL: https://github.com/eclipse-openj9/openj9/pull/6869
+PR #15226: Revert "Fix halted thread being allowed to continue execution" (Culprit SHA Found: 1146626731) - URL: https://github.com/eclipse-openj9/openj9/pull/15226
+PR #15026: Revert "Halt threads that are being attached in single thread mode" (Culprit SHA Found: 1120204852) - URL: https://github.com/eclipse-openj9/openj9/pull/15026
+PR #14945: Revert "Re-enables JNI-direct for AOT on Power" (Culprit SHA Found: 1104122943) - URL: https://github.com/eclipse-openj9/openj9/pull/14945
+PR #14409: JDK19 fix doclint:reference (Culprit SHA Found: 3b4b997b37) - URL: https://github.com/eclipse-openj9/openj9/pull/14409
+PR #14749: Fix findstackvalue DDR command (Culprit SHA Found: 1072645486) - URL: https://github.com/eclipse-openj9/openj9/pull/14749
+PR #14720: Revert "Improve IL for array load and store helpers for value types support" (Culprit SHA Found: 1068206584) - URL: https://github.com/eclipse-openj9/openj9/pull/14720
+PR #14559: Revert "Replaces uses of currentThread with walkThread in jswalk" (Culprit SHA Found: 1043782269) - URL: https://github.com/eclipse-openj9/openj9/pull/14559
+PR #14467: Revert "Preserve ymm/zmm registers on x" (Culprit SHA Found: 1033703496) - URL: https://github.com/eclipse-openj9/openj9/pull/14467
+PR #14334: Revert "JEP389/419 Foreign Linker API: DownCall (Phase 2 & 3 / struct support)" (Culprit SHA Found: 1018053796) - URL: https://github.com/eclipse-openj9/openj9/pull/14334
+PR #14063: Fix inconsistency between J9Class and annotation data when redefine (take 2) (Culprit SHA Found: 06ae571) - URL: https://github.com/eclipse-openj9/openj9/pull/14063
+PR #14062: Revert "Fix inconsistency between J9Class and annotation data when redefine" (Culprit SHA Found: 984860451) - URL: https://github.com/eclipse-openj9/openj9/pull/14062
+PR #14020: Revert "Disable stackMap cache during ASGCT" (Culprit SHA Found: 979652212) - URL: https://github.com/eclipse-openj9/openj9/pull/14020
+PR #13953: Revert "Infrastructure for creating JITServer AOT cache records during compilation" (Culprit SHA Found: 973027309) - URL: https://github.com/eclipse-openj9/openj9/pull/13953
+PR #13940: Revert "Add java option to ensure classes are hashed" (Culprit SHA Found: 971636049) - URL: https://github.com/eclipse-openj9/openj9/pull/13940
+PR #13903: Revert "Fix jvmnativestest test_EnsureWallClockTime()" (Culprit SHA Found: 965913771) - URL: https://github.com/eclipse-openj9/openj9/pull/13903
+PR #13835: Revert "Fix inconsistency between J9Class and annotation data when redefine" (Culprit SHA Found: 955010377) - URL: https://github.com/eclipse-openj9/openj9/pull/13835
+PR #13711: Revert "Fix handling of interface methods in JIT linkToVirtual()" (Culprit SHA Found: 944199950) - URL: https://github.com/eclipse-openj9/openj9/pull/13711
+PR #13564: (0.29.0) Revert "Add UTF to String cache for reflection calls" (Culprit SHA Found: 9335ec8c74) - URL: https://github.com/eclipse-openj9/openj9/pull/13564
+PR #13562: Revert "Add UTF to String cache for reflection calls " (Culprit SHA Found: 926189208) - URL: https://github.com/eclipse-openj9/openj9/pull/13562
+PR #13348: Revert "Fix off-by-one error in String.indexOf acceleration on z15" (Culprit SHA Found: 409d860) - URL: https://github.com/eclipse-openj9/openj9/pull/13348
+PR #6257: Add tests for fieldwatch and fix x86 codegen bug (Culprit SHA Found: cf5e1065e0) - URL: https://github.com/eclipse-openj9/openj9/pull/6257
+PR #13009: Fix TR_ValueProfiler initialization to allow arraycopy length profiling (Culprit SHA Found: fa5a8b31b0) - URL: https://github.com/eclipse-openj9/openj9/pull/13009
+PR #12971: Revert " Ensure consistency in the ClassLoader hash table " (Culprit SHA Found: 861448876) - URL: https://github.com/eclipse-openj9/openj9/pull/12971
+PR #12788: Move new jitm/j9jit message to the end and fix explanation prefix (Culprit SHA Found: 5fce799) - URL: https://github.com/eclipse-openj9/openj9/pull/12788
+PR #12781: Revert "Add Artifactory info for removing anon-read and adding openj9… (Culprit SHA Found: c215f3f527) - URL: https://github.com/eclipse-openj9/openj9/pull/12781
+PR #12547: Add JavaLangAccess.join(prefix, suffix, delimiter, elements, size) (Culprit SHA Found: c2d8cf4dd9) - URL: https://github.com/eclipse-openj9/openj9/pull/12547
+PR #9827: (0.21.0) Revert "Mark VM as exitting earlier" (Culprit SHA Found: e288238ffc) - URL: https://github.com/eclipse-openj9/openj9/pull/9827
+PR #10151: Set proxyFieldAccess test build destdir to fix Windows compile (Culprit SHA Found: 657065913) - URL: https://github.com/eclipse-openj9/openj9/pull/10151
+PR #12329: Fix uses of flags which were not always defined (Culprit SHA Found: 809752178) - URL: https://github.com/eclipse-openj9/openj9/pull/12329
+PR #12316: Revert "Preserve vector registers across helper calls on P" (Culprit SHA Found: 809346736) - URL: https://github.com/eclipse-openj9/openj9/pull/12316
+PR #12221: Revert "Skip self-storing stores" v0.26.0 (Culprit SHA Found: 6cb4bad293) - URL: https://github.com/eclipse-openj9/openj9/pull/12221
+PR #12213: Revert "Skip self-storing stores" (Culprit SHA Found: 6cb4bad293) - URL: https://github.com/eclipse-openj9/openj9/pull/12213
+PR #12149: Fix register usage in P awrtbari evaluator (Culprit SHA Found: 0283464fbb) - URL: https://github.com/eclipse-openj9/openj9/pull/12149
+PR #12026: Revert "Set memory to 0 after allocation in OSCacheTestSysv.cpp" (Culprit SHA Found: 783864363) - URL: https://github.com/eclipse-openj9/openj9/pull/12026
+PR #10006: Fix Class Chain Validation Caching (Culprit SHA Found: 639726358) - URL: https://github.com/eclipse-openj9/openj9/pull/10006
+PR #11121: Revert "Fix array size offset for inlined zero sized arrays in x86" (Culprit SHA Found: 722922733) - URL: https://github.com/eclipse-openj9/openj9/pull/11121
+PR #11100: Revert "Update JDK8 windows compiles to use Visual Studio 2013" (Culprit SHA Found: 721795795) - URL: https://github.com/eclipse-openj9/openj9/pull/11100
+PR #11053: Revert "Warn of mismatch between jdmpview and producer of core file" (Culprit SHA Found: 719538271) - URL: https://github.com/eclipse-openj9/openj9/pull/11053
+PR #10894: Revert "Use TR_UNIMPLEMENTED macro in JIT" (Culprit SHA Found: 708717529) - URL: https://github.com/eclipse-openj9/openj9/pull/10894
+PR #10357: Revert "JIT support for re-sizable SCC" (Culprit SHA Found: 670927672) - URL: https://github.com/eclipse-openj9/openj9/pull/10357
+PR #9451: CMake: Fix missing exports in jniargtests (Culprit SHA Found: 1588625274) - URL: https://github.com/eclipse-openj9/openj9/pull/9451
+PR #9942: Revert "Port: silence warning about ignored return value" (Culprit SHA Found: 646367295) - URL: https://github.com/eclipse-openj9/openj9/pull/9942
+PR #9909: Revert "Pass Reference repo to get_source.sh" (Culprit SHA Found: 645025485) - URL: https://github.com/eclipse-openj9/openj9/pull/9909
+PR #9783: Revert "Enable CFG simplifier" (Culprit SHA Found: ae567a49a5) - URL: https://github.com/eclipse-openj9/openj9/pull/9783
+PR #9690: Revert "CMake: Enable base warnings for gnu toolchains" (Culprit SHA Found: 02d62796ff) - URL: https://github.com/eclipse-openj9/openj9/pull/9690
+PR #8802: Remove the prefix 'debug-image' from paths in debug info archives (Culprit SHA Found: 596050357) - URL: https://github.com/eclipse-openj9/openj9/pull/8802
+PR #8787: Revert "Remove the prefix 'debug-image' from paths in debug info archives" (Culprit SHA Found: 596050357) - URL: https://github.com/eclipse-openj9/openj9/pull/8787
+PR #8412: Revert "Enable CFG Simplifier" (Culprit SHA Found: ed96ff0e14) - URL: https://github.com/eclipse-openj9/openj9/pull/8412
+PR #8342: AArch64: Fix register save order when resolving virtual method (Culprit SHA Found: bce8fc0c10) - URL: https://github.com/eclipse-openj9/openj9/pull/8342
+PR #6418: (v0.15.0) Revert "Fold ifcmp with two constant integral operands" (Culprit SHA Found: 65443a7196) - URL: https://github.com/eclipse-openj9/openj9/pull/6418
+PR #8074: Revert "Replace native libray unpack with awt in test_callNativesOnNewClassLoaders" (Culprit SHA Found: 13593888) - URL: https://github.com/eclipse-openj9/openj9/pull/8074
+PR #7865: Revert "Added the Test cases on URLHelperTests" (Culprit SHA Found: 0000000000) - URL: https://github.com/eclipse-openj9/openj9/pull/7865
+PR #7637: Fix compiler issues with SCC hint pointers (Culprit SHA Found: cda6447d9d) - URL: https://github.com/eclipse-openj9/openj9/pull/7637
+PR #7551: Revert "Merge JITServer changes to CompilationThread.cpp/hpp" (Culprit SHA Found: ac10cd3d85) - URL: https://github.com/eclipse-openj9/openj9/pull/7551
+PR #7431: Fix the -Xmso test to match #7304 (Culprit SHA Found: 96d6f92a30) - URL: https://github.com/eclipse-openj9/openj9/pull/7431
+PR #6342: Fix compile errors with xlc 16 on AIX (Culprit SHA Found: 1844674407) - URL: https://github.com/eclipse-openj9/openj9/pull/6342
+PR #6962: Revert "Enable z15 by default" (0.16.0) (Culprit SHA Found: 8eac3fc6d4) - URL: https://github.com/eclipse-openj9/openj9/pull/6962
+PR #6838: Port fixes and changes from the jitaas branch (Culprit SHA Found: 45e0952553) - URL: https://github.com/eclipse-openj9/openj9/pull/6838
+PR #6420: (v0.15.0) Revert "Emit field load instead of call in expanding MethodHandle invoke" (Culprit SHA Found: 7ad2c69b67) - URL: https://github.com/eclipse-openj9/openj9/pull/6420
+PR #6282: Revert "Enable z15 by default" (0.15.0) (Culprit SHA Found: 8eac3fc6d4) - URL: https://github.com/eclipse-openj9/openj9/pull/6282
+PR #6171: Revert "TEMP [skip ci] unexclude cmake tests" (Culprit SHA Found: f50808179e) - URL: https://github.com/eclipse-openj9/openj9/pull/6171
