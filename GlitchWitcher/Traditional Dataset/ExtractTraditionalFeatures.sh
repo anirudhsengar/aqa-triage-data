@@ -18,6 +18,7 @@ WORK_DIR=""
 OUTPUT_DIR=""
 TEMP_DIR=""
 VERBOSE=false
+SCRIPTS_DIR=""
 
 # Configurable parameters
 HALSTEAD_D_MAX="${HALSTEAD_D_MAX:-200}"  # Max difficulty cap to prevent overflow
@@ -85,9 +86,33 @@ install_dependencies() {
     fi
     
     print_info "Installing Python dependencies..."
+    
+    # Install basic dependencies for metrics calculation
     pip3 install --user lizard pygount 2>/dev/null || {
-        print_warning "Some Python packages may already be installed or failed to install"
+        print_warning "Some basic Python packages may already be installed or failed to install"
     }
+    
+    # Install dependencies required for the downloaded Python scripts
+    print_info "Installing machine learning and scientific computing dependencies..."
+    local ml_packages=(
+        "scipy"
+        "numpy"
+        "pandas"
+        "tensorflow==2.15.0"
+        "scikit-learn"
+        "matplotlib"
+        "seaborn"
+    )
+    
+    for package in "${ml_packages[@]}"; do
+        print_info "Installing $package..."
+        pip3 install --user "$package" 2>/dev/null || {
+            print_warning "Failed to install $package - this may cause issues with model training"
+        }
+    done
+    
+    # Suppress TensorFlow warnings
+    export TF_CPP_MIN_LOG_LEVEL=2
     
     if ! check_command cloc; then
         print_warning "cloc not found. Attempting to install..."
@@ -101,6 +126,8 @@ install_dependencies() {
             print_warning "Could not install cloc automatically. Please install it manually."
         fi
     fi
+    
+    print_success "Dependencies installation completed"
 }
 
 # Function to setup working directory
@@ -639,10 +666,65 @@ detect_defects() {
     fi
 }
 
-# Function to process a single file
+# Function to extract org and repo name from GitHub URL
+extract_repo_info() {
+    local url="$1"
+    # Remove .git suffix if present
+    url="${url%.git}"
+    # Extract org and repo from URL patterns like:
+    # https://github.com/org/repo
+    # git@github.com:org/repo
+    if [[ "$url" =~ github\.com[:/]([^/]+)/([^/]+)$ ]]; then
+        local org="${BASH_REMATCH[1]}"
+        local repo="${BASH_REMATCH[2]}"
+        echo "${org}-${repo}"
+    else
+        print_error "Unable to extract org/repo from URL: $url"
+        echo "unknown-repo"
+    fi
+}
+
+# Function to download required Python scripts
+download_python_scripts() {
+    print_info "Downloading required Python scripts..."
+    
+    SCRIPTS_DIR="$OUTPUT_DIR/python_scripts"
+    mkdir -p "$SCRIPTS_DIR"
+    
+    local base_url="https://raw.githubusercontent.com/adoptium/aqa-test-tools/refs/heads/master/BugPredict/GlitchWitcher"
+    local scripts=(
+        "save_trained_model.py"
+        "REPD_Impl.py"
+        "autoencoder.py"
+        "stat_util.py"
+    )
+    
+    for script in "${scripts[@]}"; do
+        print_info "Downloading $script..."
+        if command -v curl &> /dev/null; then
+            curl -s -o "$SCRIPTS_DIR/$script" "$base_url/$script" || {
+                print_error "Failed to download $script"
+                return 1
+            }
+        elif command -v wget &> /dev/null; then
+            wget -q -O "$SCRIPTS_DIR/$script" "$base_url/$script" || {
+                print_error "Failed to download $script"
+                return 1
+            }
+        else
+            print_error "Neither curl nor wget found. Cannot download Python scripts."
+            return 1
+        fi
+    done
+    
+    print_success "Python scripts downloaded successfully"
+    return 0
+}
+
+# Function to process a single file (modified to return success/failure)
 process_file() {
     local file="$1"
-    local output_file="$2"
+    local csv_line_var="$2"  # Variable name to store CSV line
     
     local filename=$(basename "$file")
     local relative_path="${file#$WORK_DIR/repo/}"
@@ -651,12 +733,36 @@ process_file() {
         print_info "Processing: $relative_path"
     fi
     
+    # Check if file is empty or doesn't exist
+    if [ ! -s "$file" ]; then
+        if [ "$VERBOSE" = true ]; then
+            print_warning "Skipping empty file: $relative_path"
+        fi
+        return 1
+    fi
+    
     # Calculate cyclomatic complexity
-    local cyclomatic_complexity=$(calculate_mccabe_complexity "$file" "$output_file")
+    local cyclomatic_complexity=$(calculate_mccabe_complexity "$file")
     cyclomatic_complexity=$(sanitize_number "$cyclomatic_complexity" "1")
+    
+    # Validate that we got a reasonable complexity value
+    if [ "$cyclomatic_complexity" = "0" ]; then
+        if [ "$VERBOSE" = true ]; then
+            print_warning "Failed to calculate complexity for: $relative_path"
+        fi
+        return 1
+    fi
     
     # Calculate Halstead metrics
     local halstead_output=$(calculate_halstead_metrics "$file")
+    
+    # Check if Halstead calculation succeeded
+    if [ -z "$halstead_output" ]; then
+        if [ "$VERBOSE" = true ]; then
+            print_warning "Failed to calculate Halstead metrics for: $relative_path"
+        fi
+        return 1
+    fi
     
     local n=$(echo "$halstead_output" | grep "^n:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
     local v=$(echo "$halstead_output" | grep "^v:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
@@ -670,6 +776,14 @@ process_file() {
     local uniq_Opnd=$(echo "$halstead_output" | grep "^uniq_Opnd:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
     local total_Op=$(echo "$halstead_output" | grep "^total_Op:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
     local total_Opnd=$(echo "$halstead_output" | grep "^total_Opnd:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
+    
+    # Validate essential Halstead metrics
+    if [ "$n" = "0" ] && [ "$v" = "0" ]; then
+        if [ "$VERBOSE" = true ]; then
+            print_warning "Invalid Halstead metrics for: $relative_path"
+        fi
+        return 1
+    fi
     
     n=$(sanitize_number "$n" "0")
     v=$(sanitize_number "$v" "0")
@@ -694,11 +808,20 @@ process_file() {
     lOComment=$(sanitize_number "$lOComment" "0")
     lOCode=$(sanitize_number "$lOCode" "0")
     
+    # Validate that we got some lines of code
+    if [ "$lOCode" = "0" ]; then
+        if [ "$VERBOSE" = true ]; then
+            print_warning "No lines of code found for: $relative_path"
+        fi
+        return 1
+    fi
+    
     # Ensure valid inputs for arithmetic
     if [[ ! "$lOCode" =~ ^[0-9]+$ ]] || [[ ! "$lOComment" =~ ^[0-9]+$ ]]; then
-        print_warning "Invalid line counts for $file: lOCode=$lOCode, lOComment=$lOComment"
-        lOCode=0
-        lOComment=0
+        if [ "$VERBOSE" = true ]; then
+            print_warning "Invalid line counts for $relative_path: lOCode=$lOCode, lOComment=$lOComment"
+        fi
+        return 1
     fi
     local lOCodeAndComment=$((lOCode + lOComment))
     lOCodeAndComment=$(sanitize_number "$lOCodeAndComment" "0")
@@ -721,72 +844,61 @@ process_file() {
     # Note: lOCode is equivalent to loc as per Halstead metrics definition
     local loc="$lOCode"
     
-    # Output results
-    echo "File: $relative_path" >> "$output_file"
-    echo "loc: $loc" >> "$output_file"
-    echo "v(g): $cyclomatic_complexity" >> "$output_file"
-    echo "ev(g): $essential_complexity" >> "$output_file"
-    echo "iv(g): $design_complexity" >> "$output_file"
-    echo "n: $n" >> "$output_file"
-    echo "v: $v" >> "$output_file"
-    echo "l: $l" >> "$output_file"
-    echo "d: $d" >> "$output_file"
-    echo "i: $i" >> "$output_file"
-    echo "e: $e" >> "$output_file"
-    echo "b: $b" >> "$output_file"
-    echo "t: $t" >> "$output_file"
-    echo "lOComment: $lOComment" >> "$output_file"
-    echo "lOBlank: $lOBlank" >> "$output_file"
-    echo "lOCodeAndComment: $lOCodeAndComment" >> "$output_file"
-    echo "uniq_Op: $uniq_Op" >> "$output_file"
-    echo "uniq_Opnd: $uniq_Opnd" >> "$output_file"
-    echo "total_Op: $total_Op" >> "$output_file"
-    echo "total_Opnd: $total_Opnd" >> "$output_file"
-    echo "branchCount: $branchCount" >> "$output_file"
-    echo "defects: $defects" >> "$output_file"
-    echo "----------------------------------------" >> "$output_file"
+    # Create CSV line
+    local csv_line="$relative_path,$loc,$cyclomatic_complexity,$essential_complexity,$design_complexity,$n,$v,$l,$d,$i,$e,$b,$t,$lOComment,$lOBlank,$lOCodeAndComment,$uniq_Op,$uniq_Opnd,$total_Op,$total_Opnd,$branchCount,$defects"
+    
+    # Return the CSV line via the variable name passed as parameter
+    printf -v "$csv_line_var" "%s" "$csv_line"
+    
+    return 0
 }
 
-# Function to generate summary report
-generate_summary() {
-    local detailed_output="$1"
-    local summary_output="$2"
+# Function to run the Python model training script
+run_model_training() {
+    local csv_file="$1"
     
-    print_info "Generating summary report..."
+    print_info "Running model training script..."
     
-    echo "File,loc,v(g),ev(g),iv(g),n,v,l,d,i,e,b,t,lOComment,lOBlank,LOCodeAndCOmment,uniq_Op,Uniq_Opnd,total_Op,total_Opnd,branchCount,defects" > "$summary_output"
+    if [ ! -f "$SCRIPTS_DIR/save_trained_model.py" ]; then
+        print_error "save_trained_model.py not found in $SCRIPTS_DIR"
+        return 1
+    fi
     
-    awk '
-    /^File:/ { file = substr($0, 7) }
-    /^loc:/ { loc = $2 }
-    /^v\(g\):/ { vg = $2 }
-    /^ev\(g\):/ { evg = $2 }
-    /^iv\(g\):/ { ivg = $2 }
-    /^n:/ { n = $2 }
-    /^v:/ { v = $2 }
-    /^l:/ { l = $2 }
-    /^d:/ { d = $2 }
-    /^i:/ { i = $2 }
-    /^e:/ { e = $2 }
-    /^b:/ { b = $2 }
-    /^t:/ { t = $2 }
-    /^lOComment:/ { lOComment = $2 }
-    /^lOBlank:/ { lOBlank = $2 }
-    /^lOCodeAndComment:/ { lOCodeAndComment = $2 }
-    /^uniq_Op:/ { uniq_Op = $2 }
-    /^uniq_Opnd:/ { uniq_Opnd = $2 }
-    /^total_Op:/ { total_Op = $2 }
-    /^total_Opnd:/ { total_Opnd = $2 }
-    /^branchCount:/ { branchCount = $2 }
-    /^defects:/ { defects = $2 }
-    /^----------------------------------------/ {
-        if (file) {
-            printf "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
-                file, loc, vg, evg, ivg, n, v, l, d, i, e, b, t, lOComment, lOBlank, lOCodeAndComment, uniq_Op, uniq_Opnd, total_Op, total_Opnd, branchCount, defects
-        }
-        file = loc = vg = evg = ivg = n = v = l = d = i = e = b = t = lOComment = lOBlank = lOCodeAndCOmment = uniq_Op = uniq_Opnd = total_Op = total_Opnd = branchCount = defects = ""
+    # Check if CSV file has data beyond the header
+    local line_count=$(wc -l < "$csv_file" | tr -d '\n\r' | xargs)
+    if [ "$line_count" -le 1 ]; then
+        print_warning "CSV file has no data rows, skipping model training"
+        return 1
+    fi
+    
+    cd "$SCRIPTS_DIR" || {
+        print_error "Failed to change to scripts directory"
+        return 1
     }
-    ' "$detailed_output" >> "$summary_output"
+    
+    # Set environment variables to suppress TensorFlow warnings
+    export TF_CPP_MIN_LOG_LEVEL=2
+    export PYTHONWARNINGS="ignore"
+    
+    print_info "Starting model training (this may take a while)..."
+    if python3 save_trained_model.py "$csv_file" 2>/dev/null; then
+        print_success "Model training completed successfully"
+        if [ -d "trained_model" ]; then
+            print_info "Trained model saved in: $SCRIPTS_DIR/trained_model"
+            # List the contents of the trained_model directory
+            print_info "Generated model files:"
+            ls -la "$SCRIPTS_DIR/trained_model/" | grep -v "^total" | tail -n +2 | while read line; do
+                echo "  $line" >&2
+            done
+        fi
+    else
+        print_error "Model training failed - check if all dependencies are properly installed"
+        print_info "You can manually run: cd $SCRIPTS_DIR && python3 save_trained_model.py $csv_file"
+        return 1
+    fi
+    
+    cd - >/dev/null 2>&1
+    return 0
 }
 
 # Function to cleanup
@@ -852,6 +964,13 @@ main() {
     
     install_dependencies
     setup_work_dir
+    
+    # Download Python scripts
+    if ! download_python_scripts; then
+        print_error "Failed to download required Python scripts"
+        exit 1
+    fi
+    
     local repo_dir=$(clone_repository "$REPO_URL")
     local cpp_files_list=$(find_cpp_files "$repo_dir")
     
@@ -860,31 +979,48 @@ main() {
         exit 0
     fi
     
-    local detailed_output="$OUTPUT_DIR/detailed_metrics.txt"
-    local summary_output="$OUTPUT_DIR/summary_metrics.csv"
+    # Generate CSV filename based on org-repo pattern
+    local repo_name=$(extract_repo_info "$REPO_URL")
+    local summary_output="$OUTPUT_DIR/${repo_name}.csv"
     
     print_info "Processing files and calculating metrics..."
     
-    local total_files=$(wc -l < "$cpp_files_list" | tr -d '\n\r' | xargs)
+    # Initialize CSV file with header
+    echo "File,loc,v(g),ev(g),iv(g),n,v,l,d,i,e,b,t,lOComment,lOBlank,LOCodeAndCOmment,uniq_Op,Uniq_Opnd,total_Op,total_Opnd,branchCount,defects" > "$summary_output"
     
+    local total_files=$(wc -l < "$cpp_files_list" | tr -d '\n\r' | xargs)
     local current_file=0
+    local successful_files=0
+    
     while IFS= read -r file; do
         current_file=$((current_file + 1))
         if [ "$VERBOSE" = false ]; then
             echo -ne "\rProgress: $current_file/$total_files files processed"
         fi
-        process_file "$file" "$detailed_output"
+        
+        local csv_line=""
+        if process_file "$file" csv_line; then
+            echo "$csv_line" >> "$summary_output"
+            successful_files=$((successful_files + 1))
+        fi
     done < "$cpp_files_list"
     
     if [ "$VERBOSE" = false ]; then
         echo ""
     fi
     
-    generate_summary "$detailed_output" "$summary_output"
-    
     print_success "Metrics calculation completed!"
-    print_info "Detailed results: $detailed_output"
-    print_info "Summary CSV: $summary_output"
+    print_info "Successfully processed: $successful_files/$total_files files"
+    print_info "Results saved to: $summary_output"
+    
+    # Run model training if we have successful results
+    if [ "$successful_files" -gt 0 ]; then
+        if ! run_model_training "$summary_output"; then
+            print_warning "Model training failed, but CSV file was generated successfully"
+        fi
+    else
+        print_warning "No files were successfully processed, skipping model training"
+    fi
 }
 
 main "$@"
