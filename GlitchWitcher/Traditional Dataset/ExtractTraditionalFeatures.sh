@@ -158,6 +158,24 @@ find_cpp_files() {
     echo "$cpp_files_list"
 }
 
+# Function to extract org and repo name from GitHub URL
+extract_repo_info() {
+    local repo_url="$1"
+    
+    # Remove .git suffix if present
+    repo_url="${repo_url%.git}"
+    
+    # Extract org and repo from various GitHub URL formats
+    if [[ "$repo_url" =~ github\.com[/:]([^/]+)/([^/]+)/?$ ]]; then
+        local org="${BASH_REMATCH[1]}"
+        local repo="${BASH_REMATCH[2]}"
+        echo "${org}-${repo}"
+    else
+        print_warning "Could not extract org/repo from URL: $repo_url"
+        echo "unknown-repo"
+    fi
+}
+
 # Function to calculate McCabe Cyclomatic Complexity using flowgraph formula
 calculate_mccabe_complexity() {
     local file="$1"
@@ -637,28 +655,10 @@ detect_defects() {
     fi
 }
 
-# Function to extract org and repo name from GitHub URL
-extract_repo_info() {
-    local repo_url="$1"
-    
-    # Remove .git suffix if present
-    repo_url="${repo_url%.git}"
-    
-    # Extract org and repo from various GitHub URL formats
-    if [[ "$repo_url" =~ github\.com[/:]([^/]+)/([^/]+)/?$ ]]; then
-        local org="${BASH_REMATCH[1]}"
-        local repo="${BASH_REMATCH[2]}"
-        echo "${org}-${repo}"
-    else
-        print_warning "Could not extract org/repo from URL: $repo_url"
-        echo "unknown-repo"
-    fi
-}
-
-# Function to process a single file and return success/failure
+# Function to process a single file
 process_file() {
     local file="$1"
-    local csv_line_var="$2"
+    local output_file="$2"
     
     local filename=$(basename "$file")
     local relative_path="${file#$WORK_DIR/repo/}"
@@ -666,9 +666,6 @@ process_file() {
     if [ "$VERBOSE" = true ]; then
         print_info "Processing: $relative_path"
     fi
-    
-    # Initialize failure flag
-    local processing_failed=false
     
     # Calculate cyclomatic complexity
     local cyclomatic_complexity=$(calculate_mccabe_complexity "$file")
@@ -689,18 +686,6 @@ process_file() {
     local uniq_Opnd=$(echo "$halstead_output" | grep "^uniq_Opnd:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
     local total_Op=$(echo "$halstead_output" | grep "^total_Op:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
     local total_Opnd=$(echo "$halstead_output" | grep "^total_Opnd:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
-    
-    # Only mark as failed if it's truly an empty/invalid file
-    if [ ! -s "$file" ]; then
-        processing_failed=true
-    # Check if Halstead completely failed (all metrics are 0 and it's not just an empty file)
-    elif [ "$n" = "0" ] && [ "$v" = "0.00" ] && [ "$uniq_Op" = "0" ] && [ "$uniq_Opnd" = "0" ] && [ "$total_Op" = "0" ] && [ "$total_Opnd" = "0" ]; then
-        # Additional check: see if file has actual content
-        local content_check=$(grep -c '[a-zA-Z0-9]' "$file" 2>/dev/null || echo "0")
-        if [ "$content_check" = "0" ]; then
-            processing_failed=true
-        fi
-    fi
     
     n=$(sanitize_number "$n" "0")
     v=$(sanitize_number "$v" "0")
@@ -725,16 +710,9 @@ process_file() {
     lOComment=$(sanitize_number "$lOComment" "0")
     lOCode=$(sanitize_number "$lOCode" "0")
     
-    # Only fail if line counting completely failed AND file has content
-    if [ "$lOCode" = "0" ] && [ "$lOComment" = "0" ] && [ "$lOBlank" = "0" ]; then
-        local file_size=$(wc -c < "$file" 2>/dev/null || echo "0")
-        if [ "$file_size" -gt 0 ]; then
-            print_warning "Line counting failed for non-empty file: $file"
-        fi
-    fi
-    
     # Ensure valid inputs for arithmetic
     if [[ ! "$lOCode" =~ ^[0-9]+$ ]] || [[ ! "$lOComment" =~ ^[0-9]+$ ]]; then
+        print_warning "Invalid line counts for $file: lOCode=$lOCode, lOComment=$lOComment"
         lOCode=0
         lOComment=0
     fi
@@ -759,59 +737,72 @@ process_file() {
     # Note: lOCode is equivalent to loc as per Halstead metrics definition
     local loc="$lOCode"
     
-    # Return failure if processing failed
-    if [ "$processing_failed" = true ]; then
-        if [ "$VERBOSE" = true ]; then
-            print_warning "Skipping failed file: $relative_path"
-        fi
-        return 1
-    fi
-    
-    # Build CSV line and return via variable reference
-    local csv_line="$relative_path,$loc,$cyclomatic_complexity,$essential_complexity,$design_complexity,$n,$v,$l,$d,$i,$e,$b,$t,$lOComment,$lOBlank,$lOCodeAndComment,$uniq_Op,$uniq_Opnd,$total_Op,$total_Opnd,$branchCount,$defects"
-    eval "$csv_line_var=\"\$csv_line\""
-    
-    return 0
+    # Output results
+    echo "File: $relative_path" >> "$output_file"
+    echo "loc: $loc" >> "$output_file"
+    echo "v(g): $cyclomatic_complexity" >> "$output_file"
+    echo "ev(g): $essential_complexity" >> "$output_file"
+    echo "iv(g): $design_complexity" >> "$output_file"
+    echo "n: $n" >> "$output_file"
+    echo "v: $v" >> "$output_file"
+    echo "l: $l" >> "$output_file"
+    echo "d: $d" >> "$output_file"
+    echo "i: $i" >> "$output_file"
+    echo "e: $e" >> "$output_file"
+    echo "b: $b" >> "$output_file"
+    echo "t: $t" >> "$output_file"
+    echo "lOComment: $lOComment" >> "$output_file"
+    echo "lOBlank: $lOBlank" >> "$output_file"
+    echo "lOCodeAndComment: $lOCodeAndComment" >> "$output_file"
+    echo "uniq_Op: $uniq_Op" >> "$output_file"
+    echo "uniq_Opnd: $uniq_Opnd" >> "$output_file"
+    echo "total_Op: $total_Op" >> "$output_file"
+    echo "total_Opnd: $total_Opnd" >> "$output_file"
+    echo "branchCount: $branchCount" >> "$output_file"
+    echo "defects: $defects" >> "$output_file"
+    echo "----------------------------------------" >> "$output_file"
 }
 
-# Function to generate CSV report directly
-generate_csv_report() {
-    local cpp_files_list="$1"
+# Function to generate CSV report directly from temp text file
+generate_csv_from_temp() {
+    local detailed_output="$1"
     local csv_output="$2"
     
     print_info "Generating CSV report..."
     
-    # Write CSV header
     echo "File,loc,v(g),ev(g),iv(g),n,v,l,d,i,e,b,t,lOComment,lOBlank,LOCodeAndCOmment,uniq_Op,Uniq_Opnd,total_Op,total_Opnd,branchCount,defects" > "$csv_output"
     
-    local total_files=$(wc -l < "$cpp_files_list" | tr -d '\n\r' | xargs)
-    local current_file=0
-    local successful_files=0
-    local failed_files=0
-    
-    while IFS= read -r file; do
-        current_file=$((current_file + 1))
-        if [ "$VERBOSE" = false ]; then
-            echo -ne "\rProgress: $current_file/$total_files files processed"
-        fi
-        
-        local csv_line=""
-        if process_file "$file" csv_line; then
-            echo "$csv_line" >> "$csv_output"
-            successful_files=$((successful_files + 1))
-        else
-            failed_files=$((failed_files + 1))
-        fi
-    done < "$cpp_files_list"
-    
-    if [ "$VERBOSE" = false ]; then
-        echo ""
-    fi
-    
-    print_info "Successfully processed: $successful_files files"
-    if [ "$failed_files" -gt 0 ]; then
-        print_warning "Failed to process: $failed_files files (skipped from CSV)"
-    fi
+    awk '
+    /^File:/ { file = substr($0, 7) }
+    /^loc:/ { loc = $2 }
+    /^v\(g\):/ { vg = $2 }
+    /^ev\(g\):/ { evg = $2 }
+    /^iv\(g\):/ { ivg = $2 }
+    /^n:/ { n = $2 }
+    /^v:/ { v = $2 }
+    /^l:/ { l = $2 }
+    /^d:/ { d = $2 }
+    /^i:/ { i = $2 }
+    /^e:/ { e = $2 }
+    /^b:/ { b = $2 }
+    /^t:/ { t = $2 }
+    /^lOComment:/ { lOComment = $2 }
+    /^lOBlank:/ { lOBlank = $2 }
+    /^lOCodeAndComment:/ { lOCodeAndComment = $2 }
+    /^uniq_Op:/ { uniq_Op = $2 }
+    /^uniq_Opnd:/ { uniq_Opnd = $2 }
+    /^total_Op:/ { total_Op = $2 }
+    /^total_Opnd:/ { total_Opnd = $2 }
+    /^branchCount:/ { branchCount = $2 }
+    /^defects:/ { defects = $2 }
+    /^----------------------------------------/ {
+        if (file) {
+            printf "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
+                file, loc, vg, evg, ivg, n, v, l, d, i, e, b, t, lOComment, lOBlank, lOCodeAndComment, uniq_Op, uniq_Opnd, total_Op, total_Opnd, branchCount, defects
+        }
+        file = loc = vg = evg = ivg = n = v = l = d = i = e = b = t = lOComment = lOBlank = lOCodeAndComment = uniq_Op = uniq_Opnd = total_Op = total_Opnd = branchCount = defects = ""
+    }
+    ' "$detailed_output" >> "$csv_output"
 }
 
 # Function to cleanup
@@ -887,11 +878,27 @@ main() {
     
     # Extract org-repo name for CSV filename
     local repo_name=$(extract_repo_info "$REPO_URL")
+    local temp_detailed_output="$TEMP_DIR/temp_detailed_metrics.txt"
     local csv_output="$OUTPUT_DIR/${repo_name}.csv"
     
     print_info "Processing files and calculating metrics..."
     
-    generate_csv_report "$cpp_files_list" "$csv_output"
+    local total_files=$(wc -l < "$cpp_files_list" | tr -d '\n\r' | xargs)
+    
+    local current_file=0
+    while IFS= read -r file; do
+        current_file=$((current_file + 1))
+        if [ "$VERBOSE" = false ]; then
+            echo -ne "\rProgress: $current_file/$total_files files processed"
+        fi
+        process_file "$file" "$temp_detailed_output"
+    done < "$cpp_files_list"
+    
+    if [ "$VERBOSE" = false ]; then
+        echo ""
+    fi
+    
+    generate_csv_from_temp "$temp_detailed_output" "$csv_output"
     
     print_success "Metrics calculation completed!"
     print_info "CSV output: $csv_output"
