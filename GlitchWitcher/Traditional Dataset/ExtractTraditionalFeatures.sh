@@ -161,10 +161,8 @@ find_cpp_files() {
 # Function to calculate McCabe Cyclomatic Complexity using flowgraph formula
 calculate_mccabe_complexity() {
     local file="$1"
-    local output_file="$2"
 
     if [ ! -s "$file" ]; then
-        print_warning "Skipping empty file: $file"
         echo "1"
         return 0
     fi
@@ -676,11 +674,6 @@ process_file() {
     local cyclomatic_complexity=$(calculate_mccabe_complexity "$file")
     cyclomatic_complexity=$(sanitize_number "$cyclomatic_complexity" "1")
     
-    # Check if McCabe calculation failed (returned default value for empty/invalid file)
-    if [ "$cyclomatic_complexity" = "1" ] && [ ! -s "$file" ]; then
-        processing_failed=true
-    fi
-    
     # Calculate Halstead metrics
     local halstead_output=$(calculate_halstead_metrics "$file")
     
@@ -697,9 +690,16 @@ process_file() {
     local total_Op=$(echo "$halstead_output" | grep "^total_Op:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
     local total_Opnd=$(echo "$halstead_output" | grep "^total_Opnd:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
     
-    # Check if Halstead calculation failed (all zeros indicates failure)
-    if [ "$n" = "0" ] && [ "$v" = "0" ] && [ "$uniq_Op" = "0" ] && [ "$uniq_Opnd" = "0" ]; then
+    # Only mark as failed if it's truly an empty/invalid file
+    if [ ! -s "$file" ]; then
         processing_failed=true
+    # Check if Halstead completely failed (all metrics are 0 and it's not just an empty file)
+    elif [ "$n" = "0" ] && [ "$v" = "0.00" ] && [ "$uniq_Op" = "0" ] && [ "$uniq_Opnd" = "0" ] && [ "$total_Op" = "0" ] && [ "$total_Opnd" = "0" ]; then
+        # Additional check: see if file has actual content
+        local content_check=$(grep -c '[a-zA-Z0-9]' "$file" 2>/dev/null || echo "0")
+        if [ "$content_check" = "0" ]; then
+            processing_failed=true
+        fi
     fi
     
     n=$(sanitize_number "$n" "0")
@@ -721,19 +721,22 @@ process_file() {
     local lOComment=$(echo "$line_counts" | cut -d',' -f2 | tr -d '\n\r' | xargs || echo "0")
     local lOCode=$(echo "$line_counts" | cut -d',' -f3 | tr -d '\n\r' | xargs || echo "0")
     
-    # Check if line counting failed
-    if [ "$lOCode" = "0" ] && [ "$lOComment" = "0" ] && [ "$lOBlank" = "0" ]; then
-        processing_failed=true
-    fi
-    
     lOBlank=$(sanitize_number "$lOBlank" "0")
     lOComment=$(sanitize_number "$lOComment" "0")
     lOCode=$(sanitize_number "$lOCode" "0")
     
+    # Only fail if line counting completely failed AND file has content
+    if [ "$lOCode" = "0" ] && [ "$lOComment" = "0" ] && [ "$lOBlank" = "0" ]; then
+        local file_size=$(wc -c < "$file" 2>/dev/null || echo "0")
+        if [ "$file_size" -gt 0 ]; then
+            print_warning "Line counting failed for non-empty file: $file"
+        fi
+    fi
+    
     # Ensure valid inputs for arithmetic
     if [[ ! "$lOCode" =~ ^[0-9]+$ ]] || [[ ! "$lOComment" =~ ^[0-9]+$ ]]; then
-        print_warning "Invalid line counts for $file: lOCode=$lOCode, lOComment=$lOComment"
-        processing_failed=true
+        lOCode=0
+        lOComment=0
     fi
     local lOCodeAndComment=$((lOCode + lOComment))
     lOCodeAndComment=$(sanitize_number "$lOCodeAndComment" "0")
@@ -867,7 +870,7 @@ main() {
         exit 1
     fi
     
-    # trap cleanup EXIT
+    trap cleanup EXIT
     
     print_info "Starting C/C++ Code Metrics Calculator"
     print_info "Repository: $REPO_URL"
