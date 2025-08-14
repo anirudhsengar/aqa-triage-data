@@ -867,7 +867,7 @@ main() {
         exit 1
     fi
     
-    trap cleanup EXIT
+    # trap cleanup EXIT
     
     print_info "Starting C/C++ Code Metrics Calculator"
     print_info "Repository: $REPO_URL"
