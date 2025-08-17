@@ -236,20 +236,8 @@ calculate_halstead_metrics() {
     local file="$1"
     
     if [ ! -s "$file" ]; then
-        print_warning "Skipping empty file: $file"
-        echo "n:0
-v:0
-l:0
-d:0
-i:0
-e:0
-b:0
-t:0
-uniq_Op:0
-uniq_Opnd:0
-total_Op:0
-total_Opnd:0"
-        return 0
+        print_warning "Skipping empty file (no metrics generated): $file"
+        return 1
     fi
 
     # Create a temporary Python script to calculate Halstead metrics
@@ -263,12 +251,8 @@ def calculate_halstead_metrics(file_path, include_keywords, d_max, b_max):
         with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
             content = f.read()
     except Exception as e:
-        print(f"Error reading file {file_path}: {e}", file=sys.stderr)
-        return {
-            'n': 0, 'v': "0.00", 'l': "0.00", 'd': "0.00",
-            'i': "0.00", 'e': "0.00", 'b': "0.00", 't': "0.00",
-            'uniq_Op': 0, 'uniq_Opnd': 0, 'total_Op': 0, 'total_Opnd': 0
-        }
+        print("__ERROR__")
+        sys.exit(1)
     
     # Remove comments and strings
     content = re.sub(r'//.*?\n', '', content)
@@ -276,14 +260,10 @@ def calculate_halstead_metrics(file_path, include_keywords, d_max, b_max):
     content = re.sub(r'"[^"]*"', '', content)
     content = re.sub(r"'[^']*'", '', content)
     
-    # Skip if content is empty or only whitespace after preprocessing
+    # If content is empty or only whitespace after preprocessing -> treat as failure
     if not content.strip():
-        print(f"File {file_path} contains no code after preprocessing", file=sys.stderr)
-        return {
-            'n': 0, 'v': "0.00", 'l': "0.00", 'd': "0.00",
-            'i': "0.00", 'e': "0.00", 'b': "0.00", 't': "0.00",
-            'uniq_Op': 0, 'uniq_Opnd': 0, 'total_Op': 0, 'total_Opnd': 0
-        }
+        print("__ERROR__")
+        sys.exit(1)
     
     # C/C++ operators (control keywords included based on config)
     operators = [
@@ -303,7 +283,6 @@ def calculate_halstead_metrics(file_path, include_keywords, d_max, b_max):
         r'\(', r'\)', r'\[', r'\]', r'\{', r'\}'
     ]
     
-    # Note: Including control keywords as operators (configurable)
     if include_keywords.lower() == 'true':
         operators.extend([
             r'\bif\b', r'\belse\b', r'\bwhile\b', r'\bfor\b', r'\bdo\b',
@@ -347,114 +326,81 @@ def calculate_halstead_metrics(file_path, include_keywords, d_max, b_max):
             operand_counts[operand] = operand_counts.get(operand, 0) + 1
             total_operands += 1
     
-    # Calculate Halstead metrics
-    mu1 = len(operator_counts)  # Unique operators
-    mu2 = len(operand_counts)   # Unique operands
-    N1 = total_operators       # Total operators
-    N2 = total_operands        # Total operands
-
-    # --- Heuristic to calculate mu2' (potential operand count) ---
-    # This logic should be placed before comment stripping to analyze the original code.
-    # It finds the average number of arguments per function in the file.
+    mu1 = len(operator_counts)
+    mu2 = len(operand_counts)
+    N1 = total_operators
+    N2 = total_operands
 
     function_pattern = re.compile(r'\b\w+[\s\*&]+\w+\s*\(([^)]*)\)\s*(?:;|\{)')
     total_args = 0
     function_count = 0
-    # 'content' is the raw text of the file before comments are stripped
     for match in function_pattern.finditer(content):
         function_count += 1
         arg_string = match.group(1).strip()
         if not arg_string or arg_string == 'void':
             arg_count = 0
         else:
-            # Count commas and add 1 for the number of arguments
             arg_count = arg_string.count(',') + 1
         total_args += arg_count
     mu2_prime = total_args / function_count if function_count > 0 else 0
-    # --- End of mu2' calculation ---
 
-    mu = mu1 + mu2  # vocabulary
-    N = N1 + N2    # length
+    mu = mu1 + mu2
+    N = N1 + N2
 
-    # Default values
-    V, V_star, L, D, I, E, T = 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+    V = V_star = L = D = I = E = T = 0.0
+    B = 0.0
 
-    if mu > 1 and N > 0: # log2(mu) is valid for mu > 0, but let's use mu > 1 to avoid log2(1)=0
-        # P = volume = V = N * log2(mu)
+    if mu > 1 and N > 0:
         V = N * math.log2(mu)
-
-        # V* = volume on minimal implementation = (2 + mu2')*log2(2 + mu2')
-        mu1_prime = 2
-        potential_vocab = mu1_prime + mu2_prime
+        potential_vocab = 2 + mu2_prime
         if potential_vocab > 1:
             V_star = potential_vocab * math.log2(potential_vocab)
-
-        # L  = program length = V*/N
-        # Implementing literally as per the documentation.
         if N > 0:
             L = V_star / N
-        
-        # D  = difficulty = 1/L
         if L > 0:
             D = 1 / L
-        
-        # I  = intelligence = L'*V' => L*V
-        # As per the documentation, L' = 1/D, which simplifies to L' = L.
-        # The standard interpretation of I = L'*V' is I = L*V.
         I = (1 / D if D > 0 else 0) * V
-        
-        # E  = effort to write program = V/L 
         if L > 0:
             E = V / L
-        
-        # T  = time to write program = E/18 seconds
         T = E / 18
+        try:
+            b_max = float(b_max)
+        except:
+            b_max = 3.0
+        B = min((E ** (2/3)) / 3000, b_max) if E > 0 else 0.0
 
-        B = min((E ** (2/3)) / 3000, float(b_max)) if E > 0 else 0
-
-    return {
-        'n': N,
-        'v': f"{V:.2f}",
-        'l': f"{L:.2f}",
-        'd': f"{D:.2f}",
-        'i': f"{I:.2f}",
-        'e': f"{E:.2f}",
-        'b': f"{B:.2f}",
-        't': f"{T:.2f}",
-        'uniq_Op': mu1,
-        'uniq_Opnd': mu2,
-        'total_Op': N1,
-        'total_Opnd': N2
-    }
+    print(f"n:{N}")
+    print(f"v:{V:.2f}")
+    print(f"l:{L:.2f}")
+    print(f"d:{D:.2f}")
+    print(f"i:{I:.2f}")
+    print(f"e:{E:.2f}")
+    print(f"b:{B:.2f}")
+    print(f"t:{T:.2f}")
+    print(f"uniq_Op:{mu1}")
+    print(f"uniq_Opnd:{mu2}")
+    print(f"total_Op:{N1}")
+    print(f"total_Opnd:{N2}")
 
 if __name__ == "__main__":
     if len(sys.argv) != 5:
-        print("Usage: python3 halstead_calculator.py <file_path> <include_keywords> <d_max> <b_max>", file=sys.stderr)
+        print("__ERROR__")
         sys.exit(1)
-    
-    metrics = calculate_halstead_metrics(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-    for key, value in metrics.items():
-        print(f"{key}:{value}")
+    calculate_halstead_metrics(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
 EOF
     
-    local halstead_output=$(python3 "$TEMP_DIR/halstead_calculator.py" "$file" "$INCLUDE_KEYWORD_OPERATORS" "$HALSTEAD_D_MAX" "$HALSTEAD_B_MAX" 2> "$TEMP_DIR/halstead_errors.log")
-    if [ -z "$halstead_output" ]; then
+    local halstead_output
+    if ! halstead_output=$(python3 "$TEMP_DIR/halstead_calculator.py" "$file" "$INCLUDE_KEYWORD_OPERATORS" "$HALSTEAD_D_MAX" "$HALSTEAD_B_MAX" 2> "$TEMP_DIR/halstead_errors.log"); then
         print_warning "Failed to calculate Halstead metrics for $file. See $TEMP_DIR/halstead_errors.log for details."
-        echo "n:0
-v:0
-l:0
-d:0
-i:0
-e:0
-b:0
-t:0
-uniq_Op:0
-uniq_Opnd:0
-total_Op:0
-total_Opnd:0"
-    else
-        echo "$halstead_output"
+        return 1
     fi
+
+    if echo "$halstead_output" | grep -q "__ERROR__"; then
+        print_warning "Halstead metrics unavailable for $file (no code or parse error)."
+        return 1
+    fi
+
+    echo "$halstead_output"
 }
 
 # Function to calculate line counts using cloc or pygount
@@ -462,40 +408,50 @@ calculate_line_counts() {
     local file="$1"
     
     if [ ! -s "$file" ]; then
-        print_warning "Skipping empty file: $file"
-        echo "0,0,0"
-        return 0
+        print_warning "Skipping empty file for line counts: $file"
+        return 1
     fi
     
     if command -v cloc &> /dev/null; then
-        local cloc_output=$(cloc --csv "$file" 2>/dev/null | tail -n +2 | head -1)
+        local cloc_output
+        cloc_output=$(cloc --csv "$file" 2>/dev/null | tail -n +2 | head -1)
         if [ -n "$cloc_output" ]; then
-            echo "$cloc_output" | cut -d',' -f3,4,5 | tr -d '\n\r'
-        else
-            print_warning "cloc returned empty output for $file"
-            echo "0,0,0"
+            local triple
+            triple=$(echo "$cloc_output" | cut -d',' -f3,4,5 | tr -d '\n\r')
+            if [ -n "$triple" ]; then
+                echo "$triple"
+                return 0
+            fi
         fi
+        print_warning "cloc returned empty/invalid output for $file"
+        return 1
     else
         if ! check_command pygount; then
             print_error "pygount is required for line counting but not installed."
-            echo "0,0,0"
-            return 0
+            return 1
         fi
-        local pygount_output=$(pygount --format=summary "$file" 2>/dev/null)
+        local pygount_output
+        pygount_output=$(pygount --format=summary "$file" 2>/dev/null)
         if [ -z "$pygount_output" ]; then
             print_warning "pygount returned empty output for $file"
-            echo "0,0,0"
-            return 0
+            return 1
         fi
-        local blank_lines=$(echo "$pygount_output" | grep -oP 'Blank lines: \K\d+' || echo "0")
-        local comment_lines=$(echo "$pygount_output" | grep -oP 'Comment lines: \K\d+' || echo "0")
-        local code_lines=$(echo "$pygount_output" | grep -oP 'Code lines: \K\d+' || echo "0")
+        local blank_lines comment_lines code_lines
+        blank_lines=$(echo "$pygount_output" | grep -oP 'Blank lines: \K\d+' || true)
+        comment_lines=$(echo "$pygount_output" | grep -oP 'Comment lines: \K\d+' || true)
+        code_lines=$(echo "$pygount_output" | grep -oP 'Code lines: \K\d+' || true)
+
+        if [[ -z "$blank_lines" || -z "$comment_lines" || -z "$code_lines" ]]; then
+            print_warning "Failed to parse pygount output for $file"
+            return 1
+        fi
         
         blank_lines=$(sanitize_number "$blank_lines" "0")
         comment_lines=$(sanitize_number "$comment_lines" "0")
         code_lines=$(sanitize_number "$code_lines" "0")
         
         echo "$blank_lines,$comment_lines,$code_lines"
+        return 0
     fi
 }
 
@@ -668,76 +624,83 @@ process_file() {
     fi
     
     # Calculate cyclomatic complexity
-    local cyclomatic_complexity=$(calculate_mccabe_complexity "$file")
+    local cyclomatic_complexity
+    cyclomatic_complexity=$(calculate_mccabe_complexity "$file")
     cyclomatic_complexity=$(sanitize_number "$cyclomatic_complexity" "1")
     
-    # Calculate Halstead metrics
-    local halstead_output=$(calculate_halstead_metrics "$file")
+    # Calculate Halstead metrics (skip file on failure)
+    local halstead_output
+    if ! halstead_output=$(calculate_halstead_metrics "$file"); then
+        print_info "Skipping $relative_path due to Halstead metrics failure."
+        return 0
+    fi
     
-    local n=$(echo "$halstead_output" | grep "^n:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
-    local v=$(echo "$halstead_output" | grep "^v:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
-    local l=$(echo "$halstead_output" | grep "^l:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
-    local d=$(echo "$halstead_output" | grep "^d:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
-    local i=$(echo "$halstead_output" | grep "^i:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
-    local e=$(echo "$halstead_output" | grep "^e:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
-    local b=$(echo "$halstead_output" | grep "^b:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
-    local t=$(echo "$halstead_output" | grep "^t:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
-    local uniq_Op=$(echo "$halstead_output" | grep "^uniq_Op:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
-    local uniq_Opnd=$(echo "$halstead_output" | grep "^uniq_Opnd:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
-    local total_Op=$(echo "$halstead_output" | grep "^total_Op:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
-    local total_Opnd=$(echo "$halstead_output" | grep "^total_Opnd:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "0")
+    local n v l d i e b t uniq_Op uniq_Opnd total_Op total_Opnd
+    n=$(echo "$halstead_output" | grep "^n:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "")
+    v=$(echo "$halstead_output" | grep "^v:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "")
+    l=$(echo "$halstead_output" | grep "^l:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "")
+    d=$(echo "$halstead_output" | grep "^d:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "")
+    i=$(echo "$halstead_output" | grep "^i:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "")
+    e=$(echo "$halstead_output" | grep "^e:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "")
+    b=$(echo "$halstead_output" | grep "^b:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "")
+    t=$(echo "$halstead_output" | grep "^t:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "")
+    uniq_Op=$(echo "$halstead_output" | grep "^uniq_Op:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "")
+    uniq_Opnd=$(echo "$halstead_output" | grep "^uniq_Opnd:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "")
+    total_Op=$(echo "$halstead_output" | grep "^total_Op:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "")
+    total_Opnd=$(echo "$halstead_output" | grep "^total_Opnd:" | cut -d':' -f2 | tr -d '\n\r' | xargs || echo "")
+
+    # Validate parsed Halstead metrics; skip file if any missing
+    if [ -z "$n" ] || [ -z "$v" ] || [ -z "$l" ] || [ -z "$d" ] || [ -z "$i" ] || [ -z "$e" ] || [ -z "$b" ] || [ -z "$t" ] || [ -z "$uniq_Op" ] || [ -z "$uniq_Opnd" ] || [ -z "$total_Op" ] || [ -z "$total_Opnd" ]; then
+        print_info "Skipping $relative_path due to incomplete Halstead metrics."
+        return 0
+    fi
     
-    n=$(sanitize_number "$n" "0")
-    v=$(sanitize_number "$v" "0")
-    l=$(sanitize_number "$l" "0")
-    d=$(sanitize_number "$d" "0")
-    i=$(sanitize_number "$i" "0")
-    e=$(sanitize_number "$e" "0")
-    b=$(sanitize_number "$b" "0")
-    t=$(sanitize_number "$t" "0")
-    uniq_Op=$(sanitize_number "$uniq_Op" "0")
-    uniq_Opnd=$(sanitize_number "$uniq_Opnd" "0")
-    total_Op=$(sanitize_number "$total_Op" "0")
-    total_Opnd=$(sanitize_number "$total_Opnd" "0")
-    
-    # Calculate line counts
-    local line_counts=$(calculate_line_counts "$file")
-    local lOBlank=$(echo "$line_counts" | cut -d',' -f1 | tr -d '\n\r' | xargs || echo "0")
-    local lOComment=$(echo "$line_counts" | cut -d',' -f2 | tr -d '\n\r' | xargs || echo "0")
-    local lOCode=$(echo "$line_counts" | cut -d',' -f3 | tr -d '\n\r' | xargs || echo "0")
+    # Calculate line counts (skip file on failure)
+    local line_counts
+    if ! line_counts=$(calculate_line_counts "$file"); then
+        print_info "Skipping $relative_path due to line count failure."
+        return 0
+    fi
+    local lOBlank lOComment lOCode
+    lOBlank=$(echo "$line_counts" | cut -d',' -f1 | tr -d '\n\r' | xargs || echo "0")
+    lOComment=$(echo "$line_counts" | cut -d',' -f2 | tr -d '\n\r' | xargs || echo "0")
+    lOCode=$(echo "$line_counts" | cut -d',' -f3 | tr -d '\n\r' | xargs || echo "0")
     
     lOBlank=$(sanitize_number "$lOBlank" "0")
     lOComment=$(sanitize_number "$lOComment" "0")
     lOCode=$(sanitize_number "$lOCode" "0")
     
-    # Ensure valid inputs for arithmetic
     if [[ ! "$lOCode" =~ ^[0-9]+$ ]] || [[ ! "$lOComment" =~ ^[0-9]+$ ]]; then
-        print_warning "Invalid line counts for $file: lOCode=$lOCode, lOComment=$lOComment"
-        lOCode=0
-        lOComment=0
+        print_info "Skipping $relative_path due to invalid line counts."
+        return 0
     fi
     local lOCodeAndComment=$((lOCode + lOComment))
     lOCodeAndComment=$(sanitize_number "$lOCodeAndComment" "0")
     
     # Calculate extended McCabe metrics
-    local extended_mccabe=$(calculate_extended_mccabe "$file" "$cyclomatic_complexity")
-    local essential_complexity=$(echo "$extended_mccabe" | cut -d',' -f1)
-    local design_complexity=$(echo "$extended_mccabe" | cut -d',' -f2)
+    local extended_mccabe
+    extended_mccabe=$(calculate_extended_mccabe "$file" "$cyclomatic_complexity")
+    local essential_complexity
+    local design_complexity
+    essential_complexity=$(echo "$extended_mccabe" | cut -d',' -f1)
+    design_complexity=$(echo "$extended_mccabe" | cut -d',' -f2)
     
     essential_complexity=$(sanitize_number "$essential_complexity" "1")
     design_complexity=$(sanitize_number "$design_complexity" "1")
     
     # Count branches
-    local branchCount=$(count_branches "$file")
+    local branchCount
+    branchCount=$(count_branches "$file")
     branchCount=$(sanitize_number "$branchCount" "0")
     
     # Detect defects
-    local defects=$(detect_defects "$file")
+    local defects
+    defects=$(detect_defects "$file")
     
     # Note: lOCode is equivalent to loc as per Halstead metrics definition
     local loc="$lOCode"
     
-    # Output results
+    # Output results (only reached if all required metrics succeeded)
     echo "File: $relative_path" >> "$output_file"
     echo "loc: $loc" >> "$output_file"
     echo "v(g): $cyclomatic_complexity" >> "$output_file"
