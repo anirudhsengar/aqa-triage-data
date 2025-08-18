@@ -611,10 +611,16 @@ detect_defects() {
     fi
 }
 
+# Function to write CSV header once
+write_csv_header() {
+    local csv_output="$1"
+    echo "File,loc,v(g),ev(g),iv(g),n,v,l,d,i,e,b,t,lOComment,lOBlank,LOCodeAndCOmment,uniq_Op,Uniq_Opnd,total_Op,total_Opnd,branchCount,defects" > "$csv_output"
+}
+
 # Function to process a single file
 process_file() {
     local file="$1"
-    local output_file="$2"
+    local csv_output="$2"
     
     local filename=$(basename "$file")
     local relative_path="${file#$WORK_DIR/repo/}"
@@ -690,7 +696,7 @@ process_file() {
     
     # Count branches
     local branchCount
-    branchCount=$(count_branches "$file")
+    branchCount=$(count_branches "$file"))
     branchCount=$(sanitize_number "$branchCount" "0")
     
     # Detect defects
@@ -700,72 +706,14 @@ process_file() {
     # Note: lOCode is equivalent to loc as per Halstead metrics definition
     local loc="$lOCode"
     
-    # Output results (only reached if all required metrics succeeded)
-    echo "File: $relative_path" >> "$output_file"
-    echo "loc: $loc" >> "$output_file"
-    echo "v(g): $cyclomatic_complexity" >> "$output_file"
-    echo "ev(g): $essential_complexity" >> "$output_file"
-    echo "iv(g): $design_complexity" >> "$output_file"
-    echo "n: $n" >> "$output_file"
-    echo "v: $v" >> "$output_file"
-    echo "l: $l" >> "$output_file"
-    echo "d: $d" >> "$output_file"
-    echo "i: $i" >> "$output_file"
-    echo "e: $e" >> "$output_file"
-    echo "b: $b" >> "$output_file"
-    echo "t: $t" >> "$output_file"
-    echo "lOComment: $lOComment" >> "$output_file"
-    echo "lOBlank: $lOBlank" >> "$output_file"
-    echo "lOCodeAndComment: $lOCodeAndComment" >> "$output_file"
-    echo "uniq_Op: $uniq_Op" >> "$output_file"
-    echo "uniq_Opnd: $uniq_Opnd" >> "$output_file"
-    echo "total_Op: $total_Op" >> "$output_file"
-    echo "total_Opnd: $total_Opnd" >> "$output_file"
-    echo "branchCount: $branchCount" >> "$output_file"
-    echo "defects: $defects" >> "$output_file"
-    echo "----------------------------------------" >> "$output_file"
-}
-
-# Function to generate CSV report directly from temp text file
-generate_csv_from_temp() {
-    local detailed_output="$1"
-    local csv_output="$2"
-    
-    print_info "Generating CSV report..."
-    
-    echo "File,loc,v(g),ev(g),iv(g),n,v,l,d,i,e,b,t,lOComment,lOBlank,LOCodeAndCOmment,uniq_Op,Uniq_Opnd,total_Op,total_Opnd,branchCount,defects" > "$csv_output"
-    
-    awk '
-    /^File:/ { file = substr($0, 7) }
-    /^loc:/ { loc = $2 }
-    /^v\(g\):/ { vg = $2 }
-    /^ev\(g\):/ { evg = $2 }
-    /^iv\(g\):/ { ivg = $2 }
-    /^n:/ { n = $2 }
-    /^v:/ { v = $2 }
-    /^l:/ { l = $2 }
-    /^d:/ { d = $2 }
-    /^i:/ { i = $2 }
-    /^e:/ { e = $2 }
-    /^b:/ { b = $2 }
-    /^t:/ { t = $2 }
-    /^lOComment:/ { lOComment = $2 }
-    /^lOBlank:/ { lOBlank = $2 }
-    /^lOCodeAndComment:/ { lOCodeAndComment = $2 }
-    /^uniq_Op:/ { uniq_Op = $2 }
-    /^uniq_Opnd:/ { uniq_Opnd = $2 }
-    /^total_Op:/ { total_Op = $2 }
-    /^total_Opnd:/ { total_Opnd = $2 }
-    /^branchCount:/ { branchCount = $2 }
-    /^defects:/ { defects = $2 }
-    /^----------------------------------------/ {
-        if (file) {
-            printf "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
-                file, loc, vg, evg, ivg, n, v, l, d, i, e, b, t, lOComment, lOBlank, lOCodeAndComment, uniq_Op, uniq_Opnd, total_Op, total_Opnd, branchCount, defects
-        }
-        file = loc = vg = evg = ivg = n = v = l = d = i = e = b = t = lOComment = lOBlank = lOCodeAndComment = uniq_Op = uniq_Opnd = total_Op = total_Opnd = branchCount = defects = ""
-    }
-    ' "$detailed_output" >> "$csv_output"
+    # Append CSV row (no txt generated)
+    printf "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n" \
+        "$relative_path" \
+        "$loc" "$cyclomatic_complexity" "$essential_complexity" "$design_complexity" \
+        "$n" "$v" "$l" "$d" "$i" "$e" "$b" "$t" \
+        "$lOComment" "$lOBlank" "$lOCodeAndComment" \
+        "$uniq_Op" "$uniq_Opnd" "$total_Op" "$total_Opnd" "$branchCount" "$defects" \
+        >> "$csv_output"
 }
 
 # Function to cleanup
@@ -841,8 +789,8 @@ main() {
     
     # Extract org-repo name for CSV filename
     local repo_name=$(extract_repo_info "$REPO_URL")
-    local temp_detailed_output="$TEMP_DIR/temp_detailed_metrics.txt"
     local csv_output="$OUTPUT_DIR/${repo_name}.csv"
+    write_csv_header "$csv_output"
     
     print_info "Processing files and calculating metrics..."
     
@@ -854,14 +802,12 @@ main() {
         if [ "$VERBOSE" = false ]; then
             echo -ne "\rProgress: $current_file/$total_files files processed"
         fi
-        process_file "$file" "$temp_detailed_output"
+        process_file "$file" "$csv_output"
     done < "$cpp_files_list"
     
     if [ "$VERBOSE" = false ]; then
         echo ""
     fi
-    
-    generate_csv_from_temp "$temp_detailed_output" "$csv_output"
     
     print_success "Metrics calculation completed!"
     print_info "CSV output: $csv_output"
