@@ -696,7 +696,7 @@ process_file() {
     
     # Count branches
     local branchCount
-    branchCount=$(count_branches "$file"))
+    branchCount=$(count_branches "$file")
     branchCount=$(sanitize_number "$branchCount" "0")
     
     # Detect defects
