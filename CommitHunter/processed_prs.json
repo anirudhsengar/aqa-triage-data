@@ -1,0 +1,1383 @@
+[
+    {
+        "pr": "22185",
+        "goodSHA": "ece2800e3871ae5cf5e8343ae246d2edcf4ab571",
+        "badSHA": "43791e915bccb3f80ef2e532c517f1b476a87c18",
+        "culprit_SHA": "2d8d9bf69c9c2dbbcfdc015b93fc3434eb65393f",
+        "failure_logs": "[javac] Compiling 80 source files to /tmp/bld_97620/job_109845664/debugtools/DDR_VM/output/bin/j9_core_tests
+            [javac] /tmp/bld_97620/job_109845664/debugtools/DDR_VM/testsrc/com/ibm/j9ddr/tools/xml/DTFJTest.java:41: error: cannot find symbol
+            [javac] public abstract class DTFJTest extends XMLComparisonUnitTest {
+            [javac]                                        ^
+            [javac]   symbol: class XMLComparisonUnitTest
+            [javac] /tmp/bld_97620/job_109845664/debugtools/DDR_VM/testsrc/com/ibm/j9ddr/tools/xml/DTFJHeapSectionUnitTest.java:46: error: method does not override or implement a method from a supertype
+            [javac] 	@Override
+            [javac] 	^
+            [javac] /tmp/bld_97620/job_109845664/debugtools/DDR_VM/testsrc/com/ibm/j9ddr/tools/xml/DTFJHeapSectionUnitTest.java:51: error: method does not override or implement a method from a supertype
+            [javac] 	@Override
+            [javac] 	^
+            [javac] /tmp/bld_97620/job_109845664/debugtools/DDR_VM/testsrc/com/ibm/j9ddr/tools/xml/DTFJHeapUnitTest.java:49: error: method does not override or implement a method from a supertype
+            [javac] 	@Override
+            [javac] 	^
+            [javac] /tmp/bld_97620/job_109845664/debugtools/DDR_VM/testsrc/com/ibm/j9ddr/tools/xml/DTFJHeapUnitTest.java:54: error: method does not override or implement a method from a supertype
+            [javac] 	@Override
+            [javac] 	^
+            [javac] Note: /tmp/bld_97620/job_109845664/debugtools/DDR_VM/testsrc/com/ibm/j9ddr/view/dtfj/test/JavaRuntimeTest.java uses unchecked or unsafe operations.
+            [javac] Note: Recompile with -Xlint:unchecked for details.
+            [javac] 5 errors",
+        "reasoning": ""
+
+    },
+    {
+        "pr": "21752",
+        "goodSHA": "a134afaba701a757b5f2e5a3e0605d12741428ad",
+        "badSHA": "f6f1da030bc0a5afaa18e27e9ca075d272e658b9",
+        "culprit_SHA": "8bbc086990",
+        "failure_logs": "[2025-03-01T17:42:37.203Z] variation: -Xdump:system:none -Xdump:heap:none -Xdump:system:events=gpf+abort+traceassert+corruptcache -XX:-JITServerTechPreviewMessage Mode501 -XXgc:fvtest_forceCopyForwardHybridMarkCompactRatio=10
+            [2025-03-01T17:42:37.203Z] JVM_OPTIONS:  -Xdump:system:none -Xdump:heap:none -Xdump:system:events=gpf+abort+traceassert+corruptcache -XX:-JITServerTechPreviewMessage -Xjit -Xgcpolicy:balanced -Xnocompressedrefs -XXgc:fvtest_forceCopyForwardHybridMarkCompactRatio=10 -Xverbosegclog 
+
+            [2025-03-01T17:45:03.678Z] TEST: java/lang/Class/forName/ForNameNames.java
+
+            [2025-03-01T17:45:03.681Z] STDERR:
+            [2025-03-01T17:45:03.681Z] org.junit.platform.commons.PreconditionViolationException: Cannot create Launcher without at least one TestEngine; consider adding an engine implementation JAR to the classpath
+            [2025-03-01T17:45:03.681Z] 	at org.junit.platform.commons.util.Preconditions.condition(Preconditions.java:314)
+            [2025-03-01T17:45:03.681Z] 	at org.junit.platform.launcher.core.DefaultLauncher.<init>(DefaultLauncher.java:55)
+            [2025-03-01T17:45:03.681Z] 	at org.junit.platform.launcher.core.LauncherFactory.createDefaultLauncher(LauncherFactory.java:134)
+            [2025-03-01T17:45:03.681Z] 	at org.junit.platform.launcher.core.LauncherFactory.openSession(LauncherFactory.java:98)
+            [2025-03-01T17:45:03.681Z] 	at com.sun.javatest.regtest.agent.JUnitRunner.runWithJUnitPlatform(JUnitRunner.java:141)
+            [2025-03-01T17:45:03.681Z] 	at com.sun.javatest.regtest.agent.JUnitRunner.main(JUnitRunner.java:95)
+            [2025-03-01T17:45:03.681Z] 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+            [2025-03-01T17:45:03.681Z] 	at java.base/java.lang.reflect.Method.invoke(Method.java:586)
+            [2025-03-01T17:45:03.681Z] 	at com.sun.javatest.regtest.agent.MainActionHelper$AgentVMRunnable.run(MainActionHelper.java:333)
+            [2025-03-01T17:45:03.681Z] 	at java.base/java.lang.Thread.run(Thread.java:1595)
+            [2025-03-01T17:45:03.681Z] 
+            [2025-03-01T17:45:03.681Z] JavaTest Message: Test threw exception: org.junit.platform.commons.PreconditionViolationException
+            [2025-03-01T17:45:03.681Z] JavaTest Message: shutting down test
+            [2025-03-01T17:45:03.681Z] 
+            [2025-03-01T17:45:03.681Z] 
+            [2025-03-01T17:45:03.681Z] TEST RESULT: Failed. Execution failed: `main' threw exception: org.junit.platform.commons.PreconditionViolationException: Cannot create Launcher without at least one TestEngine; consider adding an engine implementation JAR to the classpath
+            [2025-03-01T17:45:03.681Z] --------------------------------------------------
+            [2025-03-01T18:23:33.073Z] Test results: passed: 936; failed: 1
+
+            [2025-03-01T18:23:48.740Z] jdk_lang_j9_1_FAILED",
+            "reasoning": ""
+    },
+    {
+        "pr": "22051",
+        "goodSHA": "ee996187773fc9d08333e229cc702ad95b459c12",
+        "badSHA": "a37f3e9f3917aa1e49449691780c8b8364302f37",
+        "culprit_SHA": "a37f3e9f3917aa1e49449691780c8b8364302f37",
+        "failure_logs": "    11:06:11  /Users/jenkins/workspace/Build_JDK21_aarch64_mac_Personal/openj9/runtime/compiler/optimizer/VectorAPIExpansion.cpp:923:122: error: member access into incomplete type 'TR::StaticSymbol'
+                11:06:11        clazz = (TR_OpaqueClassBlock *)(classNode->getFirstChild()->getSymbolReference()->getSymbol()->castToStaticSymbol()->getStaticAddress());
+                11:06:11                                                                                                                           ^
+                11:06:11  /Users/jenkins/workspace/Build_JDK21_aarch64_mac_Personal/omr/compiler/il/OMRSymbol.hpp:66:22: note: forward declaration of 'TR::StaticSymbol'",
+        "reasoning": ""
+    },
+    {
+        "pr": "21332",
+        "goodSHA": "a3c0cc48d4bf9f723fc94622641fb3b84f7ae1f2",
+        "badSHA": "c363b26afeec17efc60ab87926144bfd4ac448ab",
+        "culprit_SHA": "1bae589",
+        "failure_logs": "21:56:35  Unhandled exception
+            21:56:35  Type=Segmentation error vmState=0x0005ff04
+            21:56:35  J9Generic_Signal_Number=00000018 Signal_Number=0000000b Error_Value=00000000 Signal_Code=00000002
+            21:56:35  Handler1=00007FE470E3EB60 Handler2=00007FE4714BE3C0 InaccessibleAddress=00007FE401FBF058
+            21:56:35  RDI=00007FE401EFE0F0 RSI=0000000000000000 RAX=00007FE401FBEF70 RBX=00007FE400FBF000
+            21:56:35  RCX=000000000006309C RDX=00007FE401FBE960 R8=00000000FFFFFFF6 R9=0000000000000001
+            21:56:35  R10=000000000000000D R11=0000000000000000 R12=00007FE400FC7470 R13=00007FE401FBEA30
+            21:56:35  R14=0000000000000000 R15=0000000000000000
+            21:56:35  RIP=00007FE46B74DE1A GS=0000 FS=0000 RSP=00007FE4702ED000
+            21:56:35  EFlags=0000000000010246 CS=0033 RBP=00007FE401EFE0F0 ERR=0000000000000004
+            21:56:35  TRAPNO=000000000000000E OLDMASK=0000000000000000 CR2=00007FE401FBF058
+            21:56:35  xmm0=0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            21:56:35  xmm1=00007fe400fc7470 (f: 16544880.000000, d: 6.947415e-310)
+            21:56:35  xmm2=00007fe3ee9101d0 (f: 4002480640.000000, d: 6.947400e-310)
+            21:56:35  xmm3=0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            21:56:35  xmm4=00007fe40106e960 (f: 17230176.000000, d: 6.947415e-310)
+            21:56:35  xmm5=0000003000000020 (f: 32.000000, d: 1.018558e-312)
+            21:56:35  xmm6=00007fe400c4bad0 (f: 12892880.000000, d: 6.947415e-310)
+            21:56:35  xmm7=00007fe400c4b9d0 (f: 12892624.000000, d: 6.947415e-310)
+            21:56:35  xmm8=00007fe400c4b8d0 (f: 12892368.000000, d: 6.947415e-310)
+            21:56:35  xmm9=6969696969696969 (f: 1768515968.000000, d: 6.078578e+199)
+            21:56:35  xmm10=6969168d02858459 (f: 42304600.000000, d: 6.001153e+199)
+            21:56:35  xmm11=9999999999999999 (f: 2576980480.000000, d: -2.353437e-185)
+            21:56:35  xmm12=2020202020202020 (f: 538976256.000000, d: 6.013470e-154)
+            21:56:35  xmm13=000001380000013f (f: 319.000000, d: 6.620627e-312)
+            21:56:35  xmm14=0000000008001800 (f: 134223872.000000, d: 6.631540e-316)
+            21:56:35  xmm15=0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            21:56:35  Module=/home/jenkins/workspace/Test_openjdk11_j9_sanity.openjdk_x86-64_linux_Release_testList_0/jdkbinary/j2sdk-image/lib/default/libj9jit29.so
+            21:56:35  Module_base_address=00007FE46B200000
+            21:56:35  
+            21:56:35  Method_being_compiled=com/sun/org/apache/xerces/internal/parsers/XML11Configuration.<init>(Lcom/sun/org/apache/xerces/internal/util/SymbolTable;Lcom/sun/org/apache/xerces/internal/xni/grammars/XMLGrammarPool;Lcom/sun/org/apache/xerces/internal/xni/parser/XMLComponentManager;)V
+            21:56:35  Target=2_90_20250309_162 (Linux 5.14.0-554.el9.x86_64)
+            21:56:35  CPU=amd64 (8 logical CPUs) (0x3d743b000 RAM)
+            21:56:35  ----------- Stack Backtrace -----------
+            21:56:35  _ZN2J93X8613TreeEvaluator19directCallEvaluatorEPN2TR4NodeEPNS2_13CodeGeneratorE+0x44a (0x00007FE46B74DE1A [libj9jit29.so+0x54de1a])
+            21:56:35  _ZN3OMR13CodeGenerator8evaluateEPN2TR4NodeE+0x44 (0x00007FE46B784D84 [libj9jit29.so+0x584d84])
+            21:56:35  _ZN3OMR3X8613TreeEvaluator16treetopEvaluatorEPN2TR4NodeEPNS2_13CodeGeneratorE+0x1d (0x00007FE46BBB1D4D [libj9jit29.so+0x9b1d4d])
+            21:56:35  _ZN3OMR13CodeGenerator8evaluateEPN2TR4NodeE+0x44 (0x00007FE46B784D84 [libj9jit29.so+0x584d84])
+            21:56:35  _ZN2J913CodeGenerator22doInstructionSelectionEv+0xde7 (0x00007FE46B33F3E7 [libj9jit29.so+0x13f3e7])
+            21:56:35  _ZN3OMR12CodeGenPhase32performInstructionSelectionPhaseEPN2TR13CodeGeneratorEPNS1_12CodeGenPhaseE+0x71 (0x00007FE46B793151 [libj9jit29.so+0x593151])
+            21:56:35  _ZN3OMR12CodeGenPhase10performAllEv+0xd6 (0x00007FE46B793D96 [libj9jit29.so+0x593d96])
+            21:56:35  _ZN3OMR13CodeGenerator12generateCodeEv+0x5a (0x00007FE46B78F42A [libj9jit29.so+0x58f42a])
+            21:56:35  _ZN3OMR11Compilation7compileEv+0xb66 (0x00007FE46B7BA2E6 [libj9jit29.so+0x5ba2e6])
+            21:56:35  _ZN2TR28CompilationInfoPerThreadBase7compileEP10J9VMThreadPNS_11CompilationEP17TR_ResolvedMethodR11TR_J9VMBaseP19TR_OptimizationPlanRKNS_16SegmentAllocatorE+0x4bf (0x00007FE46B37D44F [libj9jit29.so+0x17d44f])
+            21:56:35  _ZN2TR28CompilationInfoPerThreadBase14wrappedCompileEP13J9PortLibraryPv+0x381 (0x00007FE46B37E481 [libj9jit29.so+0x17e481])
+            21:56:35  omrsig_protect+0x239 (0x00007FE4714BF049 [libj9prt29.so+0x2a049])
+            21:56:35  _ZN2TR28CompilationInfoPerThreadBase7compileEP10J9VMThreadP21TR_MethodToBeCompiledRN2J917J9SegmentProviderE+0x385 (0x00007FE46B37BFE5 [libj9jit29.so+0x17bfe5])
+            21:56:35  _ZN2TR24CompilationInfoPerThread12processEntryER21TR_MethodToBeCompiledRN2J917J9SegmentProviderE+0x128 (0x00007FE46B37C308 [libj9jit29.so+0x17c308])
+            21:56:35  _ZN2TR24CompilationInfoPerThread14processEntriesEv+0x377 (0x00007FE46B37B247 [libj9jit29.so+0x17b247])
+            21:56:35  _ZN2TR24CompilationInfoPerThread3runEv+0x42 (0x00007FE46B37B5A2 [libj9jit29.so+0x17b5a2])
+            21:56:35  _Z30protectedCompilationThreadProcP13J9PortLibraryPN2TR24CompilationInfoPerThreadE+0x82 (0x00007FE46B37B652 [libj9jit29.so+0x17b652])
+            21:56:35  omrsig_protect+0x239 (0x00007FE4714BF049 [libj9prt29.so+0x2a049])
+            21:56:35  _Z21compilationThreadProcPv+0x17b (0x00007FE46B37BA1B [libj9jit29.so+0x17ba1b])
+            21:56:35  thread_wrapper+0x163 (0x00007FE4718503A3 [libj9thr29.so+0xb3a3])
+            21:56:35  start_thread+0x2d2 (0x00007FE47168A002 [libc.so.6+0x8a002])
+            21:56:35  __clone3+0x30 (0x00007FE47170F070 [libc.so.6+0x10f070])
+            21:56:35  ---------------------------------------",
+        "reasoning": ""
+    },
+    {
+        "pr": "21313",
+        "goodSHA": "c363b26afeec17efc60ab87926144bfd4ac448ab",
+        "badSHA": "840b2c95f65f3297e4b7e6a3d5ee87e400e3ffd2",
+        "culprit_SHA": "9620a5a7654118a6b379a8185281653d06b3fa80",
+        "failure_logs": "16:37:10  Exception in thread "(unnamed thread)" java/lang/InternalError: java.lang.StackOverflowError
+            16:37:10  	at jdk/internal/reflect/MethodHandleObjectFieldAccessorImpl.set (java.base@24-internal/MethodHandleObjectFieldAccessorImpl.java:117)
+            16:37:10  	at java/lang/reflect/Field.set (java.base@24-internal/Field.java:838)
+            16:37:10  	at java/lang/System.checkTmpDir (java.base@24-internal/System.java:730)
+            16:37:10  	at java/lang/ClassLoader.initializeClassLoaders (java.base@24-internal/ClassLoader.java:226)
+            16:37:10  	at java/lang/Thread.initialize (java.base@24-internal/Thread.java:2722)
+            16:37:10  	at java/lang/Thread.<init> (java.base@24-internal/Thread.java:2773)",
+        "reasoning": ""
+    },
+    {
+        "pr": "21199",
+        "goodSHA": "07b21da3c485c5c433a8122e94873b17e5240c20",
+        "badSHA": "8c3feb95d0d7b2fc2cfcd2e9d87bdbbcdb18f358",
+        "culprit_SHA": "7ee010c7af9d7a9415a3aace2ec2bcae0af808c9",
+        "failure_logs": "    Assertion failed at /tmp/bld_88867/bld_linux_x86/compiler/../omr/compiler/x/codegen/OMRMachine.cpp:558: considerVirtAsSpillCandidate
+                        VMState: 0x0005ff06
+                            freeBestGPRegister(): could not find any GPR spill candidates for VRF_0xce6f9070",
+        "reasoning": ""
+    },
+    {
+        "pr": "20579",
+        "goodSHA": "cef13e34f5b1e262fb07bce0849b0b2457473dc2",
+        "badSHA": "26133ff75ca534ff157ac410ed8700fd55cafde9",
+        "culprit_SHA": "31bef81366818ae95159c1304cd82ba56751d39f",
+         "failure_logs": "
+                            j> 10:41:51 000001002A258100: Object neither in heap nor stack-allocated in thread Pooled Thread #141 running com.ibm.jtc.svt.tests.invoke.BasicTest2
+                            j> 10:35:49 15:35:49.674 0x30125a00 j9mm.479 * ** ASSERTION FAILED ** at ../../gc_glue_java/MarkingSchemeRootMarker.cpp:53: ((MM_StackSlotValidator(MM_StackSlotValidator::NOT_ON_HEAP, object, stackLocation, walkState).validate(_env)))
+
+                            j> 10:49:53 3D053000: Object neither in heap nor stack-allocated in thread Primary|SimpleDriver|com.ibm.jtc.svt.tests.invoke.AsTypeTest.testFloat|3344|Default Invocant
+                            15:41:36.409 0x3001b100 j9mm.479 * ** ASSERTION FAILED ** at ../../../../gc_glue_java/ScavengerRootScanner.hpp:109: ((MM_StackSlotValidator(MM_StackSlotValidator::NOT_ON_HEAP, *slotPtr, stackLocation, walkState).validate(_env)))
+
+                            000000000001E700: Object neither in heap nor stack-allocated in thread main
+                            15:07:05.299 0x121100 j9mm.479 * ** ASSERTION FAILED ** at ../../../../gc_glue_java/ScavengerRootScanner.hpp:109: ((MM_StackSlotValidator(MM_StackSlotValidator::NOT_ON_HEAP, *slotPtr, stackLocation, walkState).validate(_env)))
+
+                            000000003001B100: Invalid class pointer in stack allocated object in thread main
+                            15:41:36.409 0x3001b100 j9mm.479 * ** ASSERTION FAILED ** at ../../../../gc_glue_java/ScavengerRootScanner.hpp:109: ((MM_StackSlotValidator(MM_StackSlotValidator::NOT_ON_HEAP, *slotPtr, stackLocation, walkState).validate(_env)))",
+        "reasoning": ""
+    },
+    {
+        "pr": "19478",
+        "goodSHA": "76b3fb641c03ce68375d2f3674d19df65eb58bcd",
+        "badSHA": "b2db2045aa4",
+        "culprit_SHA": "fe4c35826f300a72e64019d1365f8cca8b6c19cb",
+        "failure_logs": "17:11:39  FAILED: testChar
+            17:11:39  java.lang.IllegalStateException: Atomic access not supported for heap buffer
+            17:11:39  	at java.base/java.lang.invoke.VarHandleByteArrayAsChars$ByteBufferHandle.checkNullHeapBase(VarHandleByteArrayAsChars.java:189)
+            17:11:39  	at java.base/java.lang.invoke.VarHandleByteArrayAsChars$ByteBufferHandle.getOpaque(VarHandleByteArrayAsChars.java:261)
+            17:11:39  	at org.openj9.test.varhandle.ByteBufferViewVarHandleTests.testChar(ByteBufferViewVarHandleTests.java:84)
+
+            17:11:39  FAILED: testDouble
+            17:11:39  java.lang.IllegalStateException: Atomic access not supported for heap buffer
+            17:11:39  	at java.base/java.lang.invoke.VarHandleByteArrayAsDoubles$ByteBufferHandle.checkNullHeapBase(VarHandleByteArrayAsDoubles.java:197)
+            17:11:39  	at java.base/java.lang.invoke.VarHandleByteArrayAsDoubles$ByteBufferHandle.getOpaque(VarHandleByteArrayAsDoubles.java:270)
+            17:11:39  	at org.openj9.test.varhandle.ByteBufferViewVarHandleTests.testDouble(ByteBufferViewVarHandleTests.java:286)
+
+            17:11:39  FAILED: testFloat
+            17:11:39  java.lang.IllegalStateException: Atomic access not supported for heap buffer
+            17:11:39  	at java.base/java.lang.invoke.VarHandleByteArrayAsFloats$ByteBufferHandle.checkNullHeapBase(VarHandleByteArrayAsFloats.java:197)
+            17:11:39  	at java.base/java.lang.invoke.VarHandleByteArrayAsFloats$ByteBufferHandle.getOpaque(VarHandleByteArrayAsFloats.java:270)
+            17:11:39  	at org.openj9.test.varhandle.ByteBufferViewVarHandleTests.testFloat(ByteBufferViewVarHandleTests.java:529)
+
+            17:11:39  FAILED: testInt
+            17:11:39  java.lang.IllegalStateException: Atomic access not supported for heap buffer
+            17:11:39  	at java.base/java.lang.invoke.VarHandleByteArrayAsInts$ByteBufferHandle.checkNullHeapBase(VarHandleByteArrayAsInts.java:189)
+            17:11:39  	at java.base/java.lang.invoke.VarHandleByteArrayAsInts$ByteBufferHandle.getOpaque(VarHandleByteArrayAsInts.java:261)
+            17:11:39  	at org.openj9.test.varhandle.ByteBufferViewVarHandleTests.testInt(ByteBufferViewVarHandleTests.java:772)
+
+            17:11:39  FAILED: testIntNonZeroIndex
+            17:11:39  java.lang.IllegalStateException: Atomic access not supported for heap buffer
+            17:11:39  	at java.base/java.lang.invoke.VarHandleByteArrayAsInts$ByteBufferHandle.checkNullHeapBase(VarHandleByteArrayAsInts.java:189)
+            17:11:39  	at java.base/java.lang.invoke.VarHandleByteArrayAsInts$ByteBufferHandle.getOpaque(VarHandleByteArrayAsInts.java:261)
+            17:11:39  	at org.openj9.test.varhandle.ByteBufferViewVarHandleTests.testIntNonZeroIndex(ByteBufferViewVarHandleTests.java:998)
+
+            17:11:39  FAILED: testLong
+            17:11:39  java.lang.IllegalStateException: Atomic access not supported for heap buffer
+            17:11:39  	at java.base/java.lang.invoke.VarHandleByteArrayAsLongs$ByteBufferHandle.checkNullHeapBase(VarHandleByteArrayAsLongs.java:189)
+            17:11:39  	at java.base/java.lang.invoke.VarHandleByteArrayAsLongs$ByteBufferHandle.getOpaque(VarHandleByteArrayAsLongs.java:261)
+            17:11:39  	at org.openj9.test.varhandle.ByteBufferViewVarHandleTests.testLong(ByteBufferViewVarHandleTests.java:1208)
+
+            17:11:39  FAILED: testReadOnlyByteBuffer
+            17:11:39  java.lang.IllegalStateException: Atomic access not supported for heap buffer
+            17:11:39  	at java.base/java.lang.invoke.VarHandleByteArrayAsInts$ByteBufferHandle.checkNullHeapBase(VarHandleByteArrayAsInts.java:189)
+            17:11:39  	at java.base/java.lang.invoke.VarHandleByteArrayAsInts$ByteBufferHandle.getVolatile(VarHandleByteArrayAsInts.java:221)
+            17:11:39  	at org.openj9.test.varhandle.ByteBufferViewVarHandleTests.testReadOnlyByteBuffer(ByteBufferViewVarHandleTests.java:1747)
+
+            17:11:39  FAILED: testShort
+            17:11:39  java.lang.IllegalStateException: Atomic access not supported for heap buffer
+            17:11:39  	at java.base/java.lang.invoke.VarHandleByteArrayAsShorts$ByteBufferHandle.checkNullHeapBase(VarHandleByteArrayAsShorts.java:189)
+            17:11:39  	at java.base/java.lang.invoke.VarHandleByteArrayAsShorts$ByteBufferHandle.getOpaque(VarHandleByteArrayAsShorts.java:261)
+            17:11:39  	at org.openj9.test.varhandle.ByteBufferViewVarHandleTests.testShort(ByteBufferViewVarHandleTests.java:1435)
+
+            17:11:39  FAILED: testChar
+            17:11:39  java.lang.UnsupportedOperationException: getOpaque
+            17:11:39  	at java.base/java.lang.invoke.VarHandle.getMethodHandleUncached(VarHandle.java:2249)
+            17:11:39  	at java.base/java.lang.invoke.VarHandle.getMethodHandle(VarHandle.java:2227)
+            17:11:39  	at org.openj9.test.varhandle.ByteArrayViewVarHandleTests.testChar(ByteArrayViewVarHandleTests.java:75)
+
+            etc.",
+        "reasoning": ""
+    },
+    {
+        "pr": "19375",
+        "goodSHA": "76b3fb641c03ce68375d2f3674d19df65eb58bcd",
+        "badSHA": "b2db2045aa4",
+        "culprit_SHA": "fe4c35826f300a72e64019d1365f8cca8b6c19cb",
+        "failure_logs": "17:29:12  FAILED: testIsAccessModeSupportedCharByteArrayViewBE
+                17:29:12  java.lang.AssertionError: expected [true] but found [false]
+                17:29:12  	at org.testng.Assert.fail(Assert.java:96)
+                17:29:12  	at org.testng.Assert.failNotEquals(Assert.java:776)
+                17:29:12  	at org.testng.Assert.assertTrue(Assert.java:44)
+                17:29:12  	at org.testng.Assert.assertTrue(Assert.java:54)
+                17:29:12  	at org.openj9.test.varhandle.VarHandleUtilTests.isAccessModeSupported_ByteView(VarHandleUtilTests.java:614)
+                17:29:12  	at org.openj9.test.varhandle.VarHandleUtilTests.testIsAccessModeSupportedCharByteArrayViewBE(VarHandleUtilTests.java:721)
+
+                17:29:12  FAILED: testIsAccessModeSupportedCharByteArrayViewLE
+                17:29:12  java.lang.AssertionError: expected [true] but found [false]
+                17:29:12  	at org.testng.Assert.fail(Assert.java:96)
+                17:29:12  	at org.testng.Assert.failNotEquals(Assert.java:776)
+                17:29:12  	at org.testng.Assert.assertTrue(Assert.java:44)
+                17:29:12  	at org.testng.Assert.assertTrue(Assert.java:54)
+                17:29:12  	at org.openj9.test.varhandle.VarHandleUtilTests.isAccessModeSupported_ByteView(VarHandleUtilTests.java:614)
+                17:29:12  	at org.openj9.test.varhandle.VarHandleUtilTests.testIsAccessModeSupportedCharByteArrayViewLE(VarHandleUtilTests.java:727)
+
+                17:29:12  FAILED: testIsAccessModeSupportedDoubleByteArrayViewLE
+                17:29:12  java.lang.AssertionError: expected [true] but found [false]
+                17:29:12  	at org.testng.Assert.fail(Assert.java:96)
+                17:29:12  	at org.testng.Assert.failNotEquals(Assert.java:776)
+                17:29:12  	at org.testng.Assert.assertTrue(Assert.java:44)
+                17:29:12  	at org.testng.Assert.assertTrue(Assert.java:54)
+                17:29:12  	at org.openj9.test.varhandle.VarHandleUtilTests.isAccessModeSupported_FloatingPointView(VarHandleUtilTests.java:580)
+                17:29:12  	at org.openj9.test.varhandle.VarHandleUtilTests.testIsAccessModeSupportedDoubleByteArrayViewLE(VarHandleUtilTests.java:769)
+
+                etc.",
+        "reasoning": ""
+    },
+    {
+        "pr": "18981",
+        "goodSHA": "444d34b7780a5b4d91444bca13f108066de3f8ff",
+        "badSHA": "b78beae27dc3aa1dd0492a4d20200bcdb1e5e531",
+        "culprit_SHA": "4335656",
+        "failure_logs": "00:09:36  Type=Segmentation error vmState=0x00000000
+                00:09:36  J9Generic_Signal_Number=00000018 Signal_Number=0000000b Error_Value=00000000 Signal_Code=00000033
+                00:09:36  Handler1=09001000A0B49D58 Handler2=09001000A08EF9C0
+                00:09:36  R0=0000000000000008 R1=000001001009C420 R2=00000007FFE4CE38 R3=00000007FFE4CE38
+                00:09:36  R4=00000000000007DE R5=00000007FFDF6FE8 R6=0000000000000000 R7=0000000000000000
+                00:09:36  R8=0000000000000000 R9=0000000000000001 R10=0000010011E314E8 R11=0900000005A6E2E8
+                00:09:36  R12=0000000048000240 R13=00000100100A7800 R14=00000000300AB1B0 R15=0000000030010700
+                00:09:36  R16=0000010021EC75D8 R17=FFFFFFFFFFFFFFFF R18=0000000000000000 R19=00000007FFE4CE30
+                00:09:36  R20=0000000000000000 R21=00000007FFDF6FE8 R22=00000000000007D6 R23=0000000000000000
+                00:09:36  R24=00000007FFDF6FE8 R25=0000000000000000 R26=0000000000000000 R27=0000000000000000
+                00:09:36  R28=00000007FFDF6FE8 R29=0000000000000000 R30=00000000000007D6 R31=00000007FFE4CE30
+                00:09:36  IAR=0900000005A6E4F8 LR=0000010011E315FC MSR=A00000000200D032 CTR=0900000005A6E2E8
+                00:09:36  CR=2800024060000000 FPSCR=8200000000000000 XER=6000000082000000
+                00:09:36  FPR0 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR1 c3e0000000000000 (f: 0.000000, d: -9.223372e+18)
+                00:09:36  FPR2 3ff0000000000000 (f: 0.000000, d: 1.000000e+00)
+                00:09:36  FPR3 4330000000058237 (f: 361015.000000, d: 4.503600e+15)
+                00:09:36  FPR4 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR5 4330000000000000 (f: 0.000000, d: 4.503600e+15)
+                00:09:36  FPR6 411608dc00000000 (f: 0.000000, d: 3.610150e+05)
+                00:09:36  FPR7 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR8 3f6069c0ff9e20ca (f: 4288553216.000000, d: 2.003552e-03)
+                00:09:36  FPR9 402ba3115d13d460 (f: 1561580672.000000, d: 1.381849e+01)
+                00:09:36  FPR10 407816625220ec6e (f: 1377889408.000000, d: 3.853990e+02)
+                00:09:36  FPR11 43300000000f4240 (f: 1000000.000000, d: 4.503600e+15)
+                00:09:36  FPR12 4530000000000000 (f: 0.000000, d: 1.934281e+25)
+                00:09:36  FPR13 c001c61817798a7a (f: 393841280.000000, d: -2.221726e+00)
+                00:09:36  FPR14 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR15 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR16 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR17 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR18 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR19 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR20 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR21 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR22 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR23 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR24 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR25 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR26 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR27 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR28 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR29 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR30 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  FPR31 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                00:09:36  Module=/home/jenkins/workspace/Test_openjdk17_j9_extended.functional_ppc64_aix_Nightly_testList_0/jdkbinary/j2sdk-image/lib/default/libj9jit29.so
+                00:09:36  Module_base_address=0900000004751000
+                00:09:36  Target=2_90_20240217_687 (AIX 7.1)
+                00:09:36  CPU=ppc64 (16 logical CPUs) (0x780000000 RAM)
+                00:09:36  ----------- Stack Backtrace -----------
+                00:09:36  runCallInMethod+0x2d0 (0x09000000042A2C54 [libj9vm29.so+0x78c54])
+                00:09:36  _ZL26gpProtectedRunCallInMethodPv+0x4c (0x090000000428F2F0 [libj9vm29.so+0x652f0])
+                00:09:36  signalProtectAndRunGlue+0x28 (0x090000000428540C [libj9vm29.so+0x5b40c])
+                00:09:36  omrsig_protect+0x4fc (0x09000000046156E0 [libj9prt29.so+0x5f6e0])
+                00:09:36  gpProtectAndRun+0xf0 (0x0900000004285174 [libj9vm29.so+0x5b174])
+                00:09:36  gpCheckCallin+0x118 (0x090000000428F25C [libj9vm29.so+0x6525c])
+                00:09:36  callStaticVoidMethod+0x44 (0x09000000042F5FA8 [libj9vm29.so+0xcbfa8])
+                00:09:36  JavaMain+0xc14 (0x0000010000006FD8 [java+0x6fd8])
+                00:09:36  ThreadJavaMain+0xc (0x000001000000D110 [java+0xd110])
+                00:09:36  _pthread_body+0xf0 (0x090000000051FE14 [libpthreads.a+0x3e14])
+                00:09:36  ---------------------------------------",
+        "reasoning": ""
+    },
+    {
+        "pr": "18660",
+        "goodSHA": "52a09039db7926206800face48d0ec18c93cf759",
+        "badSHA": "54becab46",
+        "culprit_SHA": "a1b3ec700817cf47c75f425b2b62510de3023392",
+        "failure_logs": "[2023-12-15T22:04:33.880Z] variation: Mode150
+                [2023-12-15T22:04:33.880Z] JVM_OPTIONS:  -XX:+UseCompressedOops -Xverbosegclog 
+
+                [2023-12-15T22:42:14.159Z] TEST: serviceability/jvmti/vthread/GetThreadState/GetThreadStateTest.java#default
+
+                [2023-12-15T22:42:14.161Z] TEST RESULT: Error. Program `/home/jenkins/workspace/Test_openjdk21_j9_extended.openjdk_ppc64_aix/jdkbinary/j2sdk-image/bin/java' timed out (timeout set to 960000ms, elapsed time including timeout handling was 1702133ms).
+                [2023-12-15T22:42:14.161Z] --------------------------------------------------
+                [2023-12-15T22:46:15.338Z] Test results: passed: 155; failed: 2; error: 1
+                [2023-12-15T22:46:15.338Z] Report written to /home/jenkins/workspace/Test_openjdk21_j9_extended.openjdk_ppc64_aix/jvmtest/openjdk/report/html/report.html
+                [2023-12-15T22:46:15.338Z] Results written to /home/jenkins/workspace/Test_openjdk21_j9_extended.openjdk_ppc64_aix/aqa-tests/TKG/output_17026778268558/serviceability_jvmti_j9_0/work
+                [2023-12-15T22:46:15.338Z] Error: Some tests failed or other problems occurred.
+                [2023-12-15T22:46:15.338Z] -----------------------------------
+                [2023-12-15T22:46:15.338Z] serviceability_jvmti_j9_0_FAILED
+
+                [2023-12-15T20:37:00.156Z] TEST: serviceability/jvmti/vthread/GetThreadState/GetThreadStateTest.java#no-vmcontinuations
+
+                [2023-12-15T20:37:00.159Z] TEST RESULT: Error. Program `/home/jenkins/workspace/Test_openjdk21_j9_extended.openjdk_aarch64_linux/jdkbinary/j2sdk-image/bin/java' timed out (timeout set to 960000ms, elapsed time including timeout handling was 1704769ms).
+                [2023-12-15T20:37:00.159Z] --------------------------------------------------
+                [2023-12-15T20:37:00.159Z] Test results: passed: 155; failed: 2; error: 1
+                [2023-12-15T20:37:00.159Z] Report written to /home/jenkins/workspace/Test_openjdk21_j9_extended.openjdk_aarch64_linux/jvmtest/openjdk/report/html/report.html
+                [2023-12-15T20:37:00.159Z] Results written to /home/jenkins/workspace/Test_openjdk21_j9_extended.openjdk_aarch64_linux/aqa-tests/TKG/output_17026702831890/serviceability_jvmti_j9_1/work
+                [2023-12-15T20:37:00.159Z] Error: Some tests failed or other problems occurred.
+                [2023-12-15T20:37:00.159Z] -----------------------------------
+                [2023-12-15T20:37:00.159Z] serviceability_jvmti_j9_1_FAILED",
+        "reasoning": ""
+    },
+    {
+        "pr": "18637",
+        "goodSHA": "5a52b0dca816af0a0d669a9b82dc2c4127500e4e",
+        "badSHA": "711ca6c2adb",
+        "culprit_SHA": "297738fc0b322c2f98394cabc860e7bf5765f8d9",
+        "failure_logs": "21:55:35  ACTION: main -- Error. Program `/home/jenkins/workspace/Test_openjdk19_j9_sanity.openjdk_aarch64_linux_Nightly/openjdkbinary/j2sdk-image/bin/java' timed out (timeout set to 2400000ms, elapsed time including timeout handling was 2404113ms).
+                21:55:35  REASON: User specified action: run main/othervm/timeout=300 --enable-preview Skynet 
+                21:55:35  TIME:   2404.116 seconds
+                21:55:35  messages:
+                21:55:35  command: main --enable-preview Skynet
+                21:55:35  reason: User specified action: run main/othervm/timeout=300 --enable-preview Skynet 
+                21:55:35  Mode: othervm [/othervm specified]
+                21:55:35  Timeout information:
+                21:55:35  Running jcmd on process 2529589
+                21:55:35  Dump written to /home/jenkins/workspace/Test_openjdk19_j9_sanity.openjdk_aarch64_linux_Nightly/aqa-tests/TKG/output_1676426825596/jdk_lang_0/work/scratch/2/core.20230214.215530.2529589.0001.dmp
+                21:55:35  Dump written to /home/jenkins/workspace/Test_openjdk19_j9_sanity.openjdk_aarch64_linux_Nightly/aqa-tests/TKG/output_1676426825596/jdk_lang_0/work/scratch/2/javacore.20230214.215531.2529589.0002.txt
+                21:55:35  Running jstack on process 2529589
+                21:55:35  2023-02-14T21:55:32.813679073
+                21:55:35  Virtual machine: 2529589 JVM information:
+                21:55:35  JRE 19 Linux aarch64-64-Bit Compressed References 20230215_180 (JIT enabled, AOT enabled)
+                21:55:35  OpenJ9   - 711ca6c2adb
+                21:55:35  OMR      - 6adea0343aa
+                21:55:35  JCL      - 47925e78c4e based on jdk-19.0.2+7
+                21:55:35  
+                21:55:35  "main" prio=5 Id=2 WAITING
+                21:55:35  	at java.base@19.0.2-internal/java.lang.Object.waitImpl(Native Method)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.Object.wait(Object.java:255)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.Object.wait(Object.java:221)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.Thread.join(Thread.java:2151)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.Thread.join(Thread.java:2227)
+                21:55:35  	at app//com.sun.javatest.regtest.agent.MainWrapper.main(MainWrapper.java:74)
+                21:55:35  
+                21:55:35  "JIT Compilation Thread-000" prio=10 Id=4 RUNNABLE
+                21:55:35  
+                21:55:35  "JIT Compilation Thread-001 Suspended" prio=10 Id=5 RUNNABLE
+                21:55:35  
+                21:55:35  "JIT Compilation Thread-002 Suspended" prio=10 Id=6 RUNNABLE
+                21:55:35  
+                21:55:35  "JIT Compilation Thread-003 Suspended" prio=10 Id=7 RUNNABLE
+                21:55:35  
+                21:55:35  "JIT Compilation Thread-004 Suspended" prio=10 Id=8 RUNNABLE
+                21:55:35  
+                21:55:35  "JIT Compilation Thread-005 Suspended" prio=10 Id=9 RUNNABLE
+                21:55:35  
+                21:55:35  "JIT Compilation Thread-006 Suspended" prio=10 Id=10 RUNNABLE
+                21:55:35  
+                21:55:35  "JIT Diagnostic Compilation Thread-007 Suspended" prio=10 Id=11 RUNNABLE
+                21:55:35  
+                21:55:35  "JIT-SamplerThread" prio=10 Id=12 TIMED_WAITING
+                21:55:35  
+                21:55:35  "IProfiler" prio=5 Id=13 RUNNABLE
+                21:55:35  
+                21:55:35  "Common-Cleaner" prio=8 Id=3 TIMED_WAITING
+                21:55:35  	at java.base@19.0.2-internal/java.lang.Object.waitImpl(Native Method)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.Object.wait(Object.java:255)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.Object.wait(Object.java:221)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:137)
+                21:55:35  	at java.base@19.0.2-internal/jdk.internal.ref.CleanerImpl.run(CleanerImpl.java:140)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.Thread.run(Thread.java:1573)
+                21:55:35  	at java.base@19.0.2-internal/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:186)
+                21:55:35  
+                21:55:35  "Concurrent Mark Helper" prio=1 Id=14 RUNNABLE
+                21:55:35  
+                21:55:35  "GC Worker" prio=5 Id=15 RUNNABLE
+                21:55:35  
+                21:55:35  "GC Worker" prio=5 Id=16 RUNNABLE
+                21:55:35  
+                21:55:35  "GC Worker" prio=5 Id=17 RUNNABLE
+                21:55:35  
+                21:55:35  "GC Worker" prio=5 Id=18 RUNNABLE
+                21:55:35  
+                21:55:35  "GC Worker" prio=5 Id=19 RUNNABLE
+                21:55:35  
+                21:55:35  "GC Worker" prio=5 Id=20 RUNNABLE
+                21:55:35  
+                21:55:35  "GC Worker" prio=5 Id=21 RUNNABLE
+                21:55:35  
+                21:55:35  "Attach API wait loop" prio=10 Id=24 RUNNABLE
+                21:55:35  	at java.base@19.0.2-internal/openj9.internal.tools.attach.target.IPC.waitSemaphore(Native Method)
+                21:55:35  	at java.base@19.0.2-internal/openj9.internal.tools.attach.target.CommonDirectory.waitSemaphore(CommonDirectory.java:264)
+                21:55:35  	at java.base@19.0.2-internal/openj9.internal.tools.attach.target.WaitLoop.waitForNotification(WaitLoop.java:66)
+                21:55:35  	at java.base@19.0.2-internal/openj9.internal.tools.attach.target.WaitLoop.run(WaitLoop.java:157)
+                21:55:35  
+                21:55:35  "Finalizer thread" prio=5 Id=25 RUNNABLE
+                21:55:35  
+                21:55:35  "MainThread" prio=5 Id=27 WAITING
+                21:55:35  	at java.base@19.0.2-internal/jdk.internal.misc.Unsafe.park(Native Method)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.locks.LockSupport.park(LockSupport.java:371)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.SynchronousQueue$TransferStack$SNode.block(SynchronousQueue.java:288)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3745)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3690)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.SynchronousQueue$TransferStack.transfer(SynchronousQueue.java:397)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.SynchronousQueue.take(SynchronousQueue.java:886)
+                21:55:35  	at app//Skynet$Channel.receive(Skynet.java:110)
+                21:55:35  	at app//Skynet.skynet(Skynet.java:60)
+                21:55:35  	at app//Skynet.main(Skynet.java:50)
+                21:55:35  	at java.base@19.0.2-internal/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.reflect.Method.invoke(Method.java:578)
+                21:55:35  	at app//com.sun.javatest.regtest.agent.MainWrapper$MainThread.run(MainWrapper.java:127)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.Thread.run(Thread.java:1573)
+                21:55:35  
+                21:55:35  "ForkJoinPool-1-worker-2" prio=5 Id=31 RUNNABLE
+                21:55:35  	at java.base@19.0.2-internal/jdk.internal.vm.Continuation.enterImpl(Native Method)
+                21:55:35  	at java.base@19.0.2-internal/jdk.internal.vm.Continuation.run(Continuation.java:198)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.VirtualThread.runContinuation(VirtualThread.java:218)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1423)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1311)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1841)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1806)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:177)
+                21:55:35  
+                21:55:35  "ForkJoinPool-1-worker-3" prio=5 Id=41 RUNNABLE
+                21:55:35  	at java.base@19.0.2-internal/java.lang.VirtualThread.notifyJvmtiUnmountEnd(Native Method)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.VirtualThread.afterYield(VirtualThread.java:396)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.VirtualThread.runContinuation(VirtualThread.java:223)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1403)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1311)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1841)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1806)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:177)
+                21:55:35  
+                21:55:35  "ForkJoinPool-1-worker-6" prio=5 Id=47 RUNNABLE
+                21:55:35  	at java.base@19.0.2-internal/java.lang.VirtualThread.notifyJvmtiUnmountEnd(Native Method)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.VirtualThread.afterTerminate(VirtualThread.java:424)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.VirtualThread.runContinuation(VirtualThread.java:221)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1423)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1311)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1841)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1806)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:177)
+                21:55:35  
+                21:55:35  "ForkJoinPool-1-worker-7" prio=5 Id=48 RUNNABLE
+                21:55:35  	at java.base@19.0.2-internal/java.lang.VirtualThread.notifyJvmtiMountBegin(Native Method)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.VirtualThread.runContinuation(VirtualThread.java:215)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1423)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1311)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1841)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1806)
+                21:55:35  	at java.base@19.0.2-internal/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:177)
+                21:55:35  
+                21:55:35  "file lock watchdog" prio=10 Id=10700077 TIMED_WAITING
+                21:55:35  	at java.base@19.0.2-internal/java.lang.Object.waitImpl(Native Method)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.Object.wait(Object.java:255)
+                21:55:35  	at java.base@19.0.2-internal/java.lang.Object.wait(Object.java:221)
+                21:55:35  	at java.base@19.0.2-internal/java.util.TimerThread.mainLoop(Timer.java:569)
+                21:55:35  	at java.base@19.0.2-internal/java.util.TimerThread.run(Timer.java:522)
+                21:55:35  
+                21:55:35  "Attachment portNumber: 40951" prio=10 Id=10708739 RUNNABLE
+                21:55:35  	at java.base@19.0.2-internal/openj9.internal.tools.attach.target.DiagnosticUtils.dumpAllThreadsImpl(Native Method)
+                21:55:35  	at java.base@19.0.2-internal/openj9.internal.tools.attach.target.DiagnosticUtils.getThreadInfo(DiagnosticUtils.java:245)
+                21:55:35  	at java.base@19.0.2-internal/openj9.internal.tools.attach.target.DiagnosticUtils.executeDiagnosticCommand(DiagnosticUtils.java:181)
+                21:55:35  	at java.base@19.0.2-internal/openj9.internal.tools.attach.target.Attachment.doCommand(Attachment.java:248)
+                21:55:35  	at java.base@19.0.2-internal/openj9.internal.tools.attach.target.Attachment.run(Attachment.java:159)
+                21:55:35  
+                21:55:35  
+                21:55:35  --- Timeout information end.
+                21:55:35  elapsed time (seconds): 2404.116
+                21:55:35  configuration:
+                21:55:35  STDOUT:
+                21:55:35  Result: 499999500000 in 396129 ms
+                21:55:35  Result: 499999500000 in 141690 ms
+                21:55:35  Result: 499999500000 in 344331 ms
+                21:55:35  Result: 499999500000 in 326083 ms
+                21:55:35  Result: 499999500000 in 300962 ms
+                21:55:35  Result: 499999500000 in 379486 ms
+                21:55:35  Result: 499999500000 in 222160 ms
+                21:55:35  Result: 499999500000 in 194157 ms
+                21:55:35  Result: 499999500000 in 50598 ms
+                21:55:35  Timeout refired 2400 times",
+        "reasoning": ""
+    },
+        {
+        "pr": "17999",
+        "goodSHA": "5efd1ae4917bea88a4ef6a8e3f98b801843bc344",
+        "badSHA": "07388a27432",
+        "culprit_SHA": "324be0fb929ab3f076f7f7c1bcfc7f29036091e5",
+        "failure_logs": "19:42:09  variation: Mode150
+            19:42:09  JVM_OPTIONS:  -XX:+UseCompressedOops 
+
+            19:45:59  TEST: serviceability/jvmti/stress/StackTrace/Suspended/GetStackTraceSuspendedStressTest.java
+
+            19:45:59  STDERR:
+            19:45:59  Unhandled exception
+            19:45:59  Type=Segmentation error vmState=0x00000000
+            19:45:59  J9Generic_Signal_Number=00000018 Signal_Number=0000000b Error_Value=00000000 Signal_Code=00000001
+            19:45:59  Handler1=00007FFF8FAC0830 Handler2=00007FFF8F9E96C0
+            19:45:59  R0=00007FFF8DDB2E9C R1=00007FFF7081BE00 R2=00007FFF8DE37B00 R3=0000000000000000
+            19:45:59  R4=0000000000000000 R5=0000000000000000 R6=0000000000000001 R7=0000000000000000
+            19:45:59  R8=0000000000000000 R9=0000000000000000 R10=0000000000000001 R11=00007FFF8F3B3550
+            19:45:59  R12=00007FFF945AF2B0 R13=00007FFF708268F0 R14=00007FFF94710000 R15=0000000000000000
+            19:45:59  R16=00007FFF945E4110 R17=00007FFF945E4120 R18=00007FFF7081F240 R19=00007FFF04028418
+            19:45:59  R20=0000000000000000 R21=00007FFF7081BFA0 R22=00007FFF7081BF9C R23=000000000000003E
+            19:45:59  R24=00007FFF945617C0 R25=00007FFF7081BFA8 R26=00007FFF900316B0 R27=00007FFF04029350
+            19:45:59  R28=00007FFF8DE31210 R29=00007FFF7081BF08 R30=0000000000000000 R31=0000000000000000
+            19:45:59  NIP=00007FFF8DDB2EB0 MSR=800000000280D033 ORIG_GPR3=00007FFF8EACE11C CTR=00007FFF945AF2B0
+            19:45:59  LINK=00007FFF8DDB2E9C XER=0000000020000000 CCR=0000000028444482 SOFTE=0000000000000001
+            19:45:59  TRAP=0000000000000300 DAR=0000000000000AE8 dsisr=0000000040000000 RESULT=0000000000000000
+            19:45:59  FPR0 0000000000000007 (f: 7.000000, d: 3.458460e-323)
+            19:45:59  FPR1 4055564ce0000000 (f: 3758096384.000000, d: 8.534844e+01)
+            19:45:59  FPR2 3fefe55ddee01cf3 (f: 3739229440.000000, d: 9.967489e-01)
+            19:45:59  FPR3 3fee666660000000 (f: 1610612736.000000, d: 9.500000e-01)
+            19:45:59  FPR4 3fce840b4ac4e4d2 (f: 1254417664.000000, d: 2.384047e-01)
+            19:45:59  FPR5 bfe7154748bef6c8 (f: 1220474624.000000, d: -7.213475e-01)
+            19:45:59  FPR6 3fe62e42fefa39ef (f: 4277811712.000000, d: 6.931472e-01)
+            19:45:59  FPR7 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR8 616d692d74736574 (f: 1953719680.000000, d: 2.067451e+161)
+            19:45:59  FPR9 7073746f682f6567 (f: 1747936640.000000, d: 4.832635e+233)
+            19:45:59  FPR10 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR11 41cdcd6500000000 (f: 0.000000, d: 1.000000e+09)
+            19:45:59  FPR12 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR13 0000000000223f00 (f: 2244352.000000, d: 1.108857e-317)
+            19:45:59  FPR14 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR15 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR16 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR17 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR18 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR19 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR20 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR21 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR22 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR23 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR24 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR25 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR26 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR27 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR28 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR29 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR30 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  FPR31 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+            19:45:59  Module=/home/jenkins/workspace/Test_openjdk21_j9_extended.openjdk_ppc64le_linux_Personal/openjdkbinary/j2sdk-image/lib/default/libj9jvmti29.so
+            19:45:59  Module_base_address=00007FFF8DDA0000
+            19:45:59  Target=2_90_20230809_23 (Linux 5.14.21-150400.24.69-default)
+            19:45:59  CPU=ppc64le (4 logical CPUs) (0x1e8390000 RAM)
+            19:45:59  ----------- Stack Backtrace -----------
+            19:45:59  jvmtiGetCarrierThread+0x160 (0x00007FFF8DDB2EB0 [libj9jvmti29.so+0x12eb0])
+            19:45:59  _ZL18get_carrier_threadP9_jvmtiEnvP7JNIEnv_P8_jobject+0x5c (0x00007FFF71562CEC [libGetStackTraceSuspendedStress.so+0x2cec])
+            19:45:59  _ZL9agentProcP9_jvmtiEnvP7JNIEnv_Pv+0x244 (0x00007FFF71566B44 [libGetStackTraceSuspendedStress.so+0x6b44])
+            19:45:59  agent_thread_wrapper+0x64 (0x00007FFF715632C4 [libGetStackTraceSuspendedStress.so+0x32c4])
+            19:45:59  wrappedAgentThreadStart+0x10c (0x00007FFF8DDDC2FC [libj9jvmti29.so+0x3c2fc])
+            19:45:59  omrsig_protect+0x3e4 (0x00007FFF8F9EAB74 [libj9prt29.so+0x3ab74])
+            19:45:59  agentThreadStart+0x88 (0x00007FFF8DDDBEA8 [libj9jvmti29.so+0x3bea8])
+            19:45:59  thread_wrapper+0x190 (0x00007FFF9404D820 [libj9thr29.so+0xd820])
+            19:45:59  start_thread+0xf8 (0x00007FFF945A9748 [libpthread.so.0+0x9748])
+            19:45:59  clone+0x74 (0x00007FFF9448A084 [libc.so.6+0x13a084])
+            19:45:59  ---------------------------------------
+            19:45:59  JVMDUMP039I Processing dump event "gpf", detail "" at 2023/08/09 16:45:58 - please wait.
+
+            19:45:59  TEST RESULT: Failed. Unexpected exit from test [exit code: 255]
+            19:45:59  --------------------------------------------------
+            19:48:30  Test results: passed: 124; failed: 1
+            19:48:45  Report written to /home/jenkins/workspace/Test_openjdk21_j9_extended.openjdk_ppc64le_linux_Personal/jvmtest/openjdk/report/html/report.html
+            19:48:45  Results written to /home/jenkins/workspace/Test_openjdk21_j9_extended.openjdk_ppc64le_linux_Personal/aqa-tests/TKG/output_16916244103824/serviceability_jvmti_j9_0/work
+            19:48:45  Error: Some tests failed or other problems occurred.
+            19:48:45  -----------------------------------
+            19:48:45  serviceability_jvmti_j9_0_FAILED",
+        "reasoning": ""
+    },
+    {
+        "pr": "8230",
+        "goodSHA": "630b93cdc9c5d58e5e7a4a10b75b1aa6da2f6192",
+        "badSHA": "9966b13c4",
+        "culprit_SHA": "83b47689ad1a56e06670bd0cd606876b304cd9a2",
+        "failure_logs": "16:32:12  STDOUT:
+            16:32:12  interface I { void m(); }
+            16:32:12  interface J { void m(); }
+            16:32:12  interface K extends I, J {  }
+            16:32:12  abstract class C {  }
+            16:32:12  abstract class D extends C implements I {  }
+            16:32:12  abstract class E extends D implements J, K {  }
+            16:32:12  
+            16:32:12  expected: E.gM: I.m
+            16:32:12    actual: E.gM: J.m
+            16:32:12  
+            16:32:12  
+            16:32:12  STDERR:
+            16:32:12  java.lang.RuntimeException: There were 1 differences.
+            16:32:12  	at PublicMethodsTest.main(PublicMethodsTest.java:81)
+            16:32:12  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+            16:32:12  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+            16:32:12  	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+            16:32:12  	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+            16:32:12  	at com.sun.javatest.regtest.agent.MainActionHelper$AgentVMRunnable.run(MainActionHelper.java:298)
+            16:32:12  	at java.base/java.lang.Thread.run(Thread.java:832)
+            16:32:12  
+            16:32:12  JavaTest Message: Test threw exception: java.lang.RuntimeException
+            16:32:12  JavaTest Message: shutting down test",
+        "reasoning": ""
+    },
+        {
+        "pr": "11513",
+        "goodSHA": "df99e45eb7564272193fcc8c6c5baa8f67fc5b7a",
+        "badSHA": "8a09d26dbd5",
+        "culprit_SHA": "5014bf0f1bae681c90955405d701ad5c9ca35a76",
+        "failure_logs": "01:45:44  ACTION: main -- Error. Agent error: java.lang.Exception: Agent 1 timed out with a timeout of 960 seconds; check console log for any additional details
+                01:45:44  REASON: Assumed action based on file name: run main GCRetention 
+                01:45:44  TIME:   965.38 seconds
+                01:45:44  messages:
+                01:45:44  command: main GCRetention
+                01:45:44  reason: Assumed action based on file name: run main GCRetention 
+                01:45:44  Mode: agentvm
+                01:45:44  Agent id: 1
+                01:45:44  Timeout refired 960 times
+                01:45:44  Timeout information:
+                01:45:44  Running jcmd on process 31103
+                01:45:44  Dump written to /home/jenkins/workspace/Test_openjdk11_j9_sanity.openjdk_s390x_linux_Nightly/openjdk-tests/TKG/test_output_16081856075131/jdk_util_j9_0/work/scratch/1/core.20201217.064531.31103.0001.dmp
+                01:45:44  Running jstack on process 31103
+                01:45:44  2020-12-17T06:45:33.524181085
+                01:45:44  Virtual machine: 31103 JVM information:
+                01:45:44  JRE 11 Linux s390x-64-Bit Compressed References 20201216_600 (JIT enabled, AOT enabled)
+                01:45:44  OpenJ9   - 8a09d26dbd5
+                01:45:44  OMR      - adb322cd8ac
+                01:45:44  JCL      - c47c5c113fb based on jdk-11.0.10+6
+                01:45:44  
+                01:45:44  "main" prio=5 Id=1 WAITING
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Object.wait(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Object.wait(Object.java:221)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.join(Thread.java:716)
+                01:45:44  	at app//com.sun.javatest.regtest.agent.MainActionHelper.runClass(MainActionHelper.java:198)
+                01:45:44  	at app//com.sun.javatest.regtest.agent.AgentServer.doMain(AgentServer.java:305)
+                01:45:44  	at app//com.sun.javatest.regtest.agent.AgentServer.run(AgentServer.java:232)
+                01:45:44  	at app//com.sun.javatest.regtest.agent.AgentServer.main(AgentServer.java:69)
+                01:45:44  
+                01:45:44  "JIT Compilation Thread-000" prio=10 Id=3 RUNNABLE
+                01:45:44  
+                01:45:44  "JIT Compilation Thread-001 Suspended" prio=10 Id=4 RUNNABLE
+                01:45:44  
+                01:45:44  "JIT Compilation Thread-002 Suspended" prio=10 Id=5 RUNNABLE
+                01:45:44  
+                01:45:44  "JIT Compilation Thread-003 Suspended" prio=10 Id=6 RUNNABLE
+                01:45:44  
+                01:45:44  "JIT Compilation Thread-004 Suspended" prio=10 Id=7 RUNNABLE
+                01:45:44  
+                01:45:44  "JIT Compilation Thread-005 Suspended" prio=10 Id=8 RUNNABLE
+                01:45:44  
+                01:45:44  "JIT Compilation Thread-006 Suspended" prio=10 Id=9 RUNNABLE
+                01:45:44  
+                01:45:44  "JIT Diagnostic Compilation Thread-007 Suspended" prio=10 Id=10 RUNNABLE
+                01:45:44  
+                01:45:44  "JIT-SamplerThread" prio=10 Id=11 TIMED_WAITING
+                01:45:44  
+                01:45:44  "IProfiler" prio=5 Id=12 RUNNABLE
+                01:45:44  
+                01:45:44  "Common-Cleaner" prio=8 Id=2 TIMED_WAITING
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Object.wait(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Object.wait(Object.java:221)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:138)
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.ref.CleanerImpl.run(CleanerImpl.java:148)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.run(Thread.java:836)
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:134)
+                01:45:44  
+                01:45:44  "Finalizer thread" prio=5 Id=13 RUNNABLE
+                01:45:44  
+                01:45:44  "Concurrent Mark Helper" prio=1 Id=14 RUNNABLE
+                01:45:44  
+                01:45:44  "GC Worker" prio=5 Id=15 RUNNABLE
+                01:45:44  
+                01:45:44  "GC Worker" prio=5 Id=16 RUNNABLE
+                01:45:44  
+                01:45:44  "GC Worker" prio=5 Id=17 RUNNABLE
+                01:45:44  
+                01:45:44  "Attach API wait loop" prio=10 Id=20 TIMED_WAITING
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.sleep(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.sleep(Thread.java:966)
+                01:45:44  	at java.base@11.0.10-internal/openj9.internal.tools.attach.target.WaitLoop.checkReplyAndCreateAttachment(WaitLoop.java:140)
+                01:45:44  	at java.base@11.0.10-internal/openj9.internal.tools.attach.target.WaitLoop.waitForNotification(WaitLoop.java:117)
+                01:45:44  	at java.base@11.0.10-internal/openj9.internal.tools.attach.target.WaitLoop.run(WaitLoop.java:154)
+                01:45:44  
+                01:45:44  "pool-1-thread-1" prio=5 Id=21 TIMED_WAITING
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.misc.Unsafe.park(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:234)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2123)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1054)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1114)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.run(Thread.java:836)
+                01:45:44  
+                01:45:44  "ClassCache Reaper" prio=5 Id=40 WAITING
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Object.wait(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Object.wait(Object.java:221)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:138)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:110)
+                01:45:44  	at java.base@11.0.10-internal/java.io.ClassCache$Reaper.run(ClassCache.java:234)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.run(Thread.java:836)
+                01:45:44  
+                01:45:44  "ForkJoinPool.commonPool-worker-3" prio=5 Id=69 WAITING
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.misc.Unsafe.park(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.LockSupport.park(LockSupport.java:194)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1628)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:183)
+                01:45:44  
+                01:45:44  "AgentVMThread" prio=5 Id=953 TIMED_WAITING
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Object.wait(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Object.wait(Object.java:221)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:138)
+                01:45:44  	at app//GCRetention.removeAll(GCRetention.java:86)
+                01:45:44  	at app//GCRetention.test(GCRetention.java:117)
+                01:45:44  	at app//GCRetention.instanceMain(GCRetention.java:138)
+                01:45:44  	at app//GCRetention.main(GCRetention.java:136)
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.reflect.Method.invoke(Method.java:566)
+                01:45:44  	at app//com.sun.javatest.regtest.agent.MainActionHelper$AgentVMRunnable.run(MainActionHelper.java:312)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.run(Thread.java:836)
+                01:45:44  
+                01:45:44  "pool-66-thread-1" prio=5 Id=954 WAITING
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.misc.Unsafe.park(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.LockSupport.park(LockSupport.java:194)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2081)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1054)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1114)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.run(Thread.java:836)
+                01:45:44  
+                01:45:44  "pool-66-thread-2" prio=5 Id=955 WAITING
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.misc.Unsafe.park(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.LockSupport.park(LockSupport.java:194)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2081)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1054)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1114)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.run(Thread.java:836)
+                01:45:44  
+                01:45:44  "pool-66-thread-3" prio=5 Id=956 WAITING
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.misc.Unsafe.park(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.LockSupport.park(LockSupport.java:194)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2081)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1054)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1114)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.run(Thread.java:836)
+                01:45:44  
+                01:45:44  "pool-66-thread-4" prio=5 Id=957 WAITING
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.misc.Unsafe.park(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.LockSupport.park(LockSupport.java:194)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2081)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1054)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1114)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.run(Thread.java:836)
+                01:45:44  
+                01:45:44  "pool-66-thread-5" prio=5 Id=958 WAITING
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.misc.Unsafe.park(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.LockSupport.park(LockSupport.java:194)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2081)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1177)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1054)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1114)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.run(Thread.java:836)
+                01:45:44  
+                01:45:44  "pool-66-thread-6" prio=5 Id=959 WAITING
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.misc.Unsafe.park(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.LockSupport.park(LockSupport.java:194)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2081)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1054)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1114)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.run(Thread.java:836)
+                01:45:44  
+                01:45:44  "pool-66-thread-7" prio=5 Id=960 WAITING
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.misc.Unsafe.park(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.LockSupport.park(LockSupport.java:194)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2081)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1177)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1054)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1114)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.run(Thread.java:836)
+                01:45:44  
+                01:45:44  "pool-66-thread-8" prio=5 Id=961 WAITING
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.misc.Unsafe.park(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.LockSupport.park(LockSupport.java:194)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2081)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1054)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1114)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.run(Thread.java:836)
+                01:45:44  
+                01:45:44  "pool-66-thread-9" prio=5 Id=962 WAITING
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.misc.Unsafe.park(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.LockSupport.park(LockSupport.java:194)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2081)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1177)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1054)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1114)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.run(Thread.java:836)
+                01:45:44  
+                01:45:44  "pool-66-thread-10" prio=5 Id=963 WAITING
+                01:45:44  	at java.base@11.0.10-internal/jdk.internal.misc.Unsafe.park(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.LockSupport.park(LockSupport.java:194)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2081)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1054)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1114)
+                01:45:44  	at java.base@11.0.10-internal/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Thread.run(Thread.java:836)
+                01:45:44  
+                01:45:44  "file lock watchdog" prio=10 Id=965 TIMED_WAITING
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Object.wait(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/java.lang.Object.wait(Object.java:221)
+                01:45:44  	at java.base@11.0.10-internal/java.util.TimerThread.mainLoop(Timer.java:553)
+                01:45:44  	at java.base@11.0.10-internal/java.util.TimerThread.run(Timer.java:506)
+                01:45:44  
+                01:45:44  "Attachment 34983" prio=10 Id=966 RUNNABLE
+                01:45:44  	at java.base@11.0.10-internal/openj9.internal.tools.attach.target.DiagnosticUtils.dumpAllThreadsImpl(Native Method)
+                01:45:44  	at java.base@11.0.10-internal/openj9.internal.tools.attach.target.DiagnosticUtils.getThreadInfo(DiagnosticUtils.java:245)
+                01:45:44  	at java.base@11.0.10-internal/openj9.internal.tools.attach.target.DiagnosticUtils$$Lambda$5/0x0000000000000000.apply(Unknown Source)
+                01:45:44  	at java.base@11.0.10-internal/openj9.internal.tools.attach.target.DiagnosticUtils.executeDiagnosticCommand(DiagnosticUtils.java:181)
+                01:45:44  	at java.base@11.0.10-internal/openj9.internal.tools.attach.target.Attachment.doCommand(Attachment.java:249)
+                01:45:44  	at java.base@11.0.10-internal/openj9.internal.tools.attach.target.Attachment.run(Attachment.java:160)
+                01:45:44  
+                01:45:44  
+                01:45:44  --- Timeout information end.",
+        "reasoning": ""
+    },
+        {
+        "pr": "17438",
+        "goodSHA": "b182f7adeea7d4ccb90e8b87761d4fe815619b0d",
+        "badSHA": "8b5fd99a8d71561e94dcbdf84af681ef7d1bb701",
+        "culprit_SHA": "45b8ee80bc4528f374aa95cdda5ade6c6caabb6f",
+        "failure_logs": "[2023-05-17T02:20:36.375Z] variation: -Xdump:system:none -Xdump:heap:none -Xdump:system:events=gpf+abort+traceassert+corruptcache -XX:-JITServerTechPreviewMessage Mode150
+            [2023-05-17T02:20:36.375Z] JVM_OPTIONS:  -Xdump:system:none -Xdump:heap:none -Xdump:system:events=gpf+abort+traceassert+corruptcache -XX:-JITServerTechPreviewMessage -XX:+UseCompressedOops 
+
+            [2023-05-17T02:39:19.628Z] TEST: java/lang/ClassLoader/securityManager/ClassLoaderTest.java
+
+            [2023-05-17T02:39:19.631Z] TEST RESULT: Error. Agent error: java.lang.Exception: Agent 8 timed out with a timeout of 960 seconds; check console log for any additional details
+
+            [2023-05-17T02:58:13.935Z] TEST: jdk/modules/scenarios/overlappingpackages/OverlappingPackagesTest.java
+
+            [2023-05-17T02:58:13.937Z] TEST RESULT: Error. Agent error: java.lang.Exception: Agent 28 timed out with a timeout of 960 seconds; check console log for any additional details
+            [2023-05-17T02:58:13.937Z] --------------------------------------------------
+            [2023-05-17T02:58:13.937Z] Test results: passed: 867; error: 2
+            [2023-05-17T02:58:21.184Z] Report written to /home/jenkins/workspace/Test_openjdk20_j9_sanity.openjdk_aarch64_linux_testList_0/aqa-tests/TKG/output_16842900355049/jdk_lang_0/report/html/report.html
+            [2023-05-17T02:58:21.184Z] Results written to /home/jenkins/workspace/Test_openjdk20_j9_sanity.openjdk_aarch64_linux_testList_0/aqa-tests/TKG/output_16842900355049/jdk_lang_0/work
+            [2023-05-17T02:58:21.184Z] Error: Some tests failed or other problems occurred.
+            [2023-05-17T02:58:21.184Z] -----------------------------------
+            [2023-05-17T02:58:21.184Z] jdk_lang_0_FAILED
+
+            [2023-05-17T02:59:48.565Z] variation: -Xdump:system:none -Xdump:heap:none -Xdump:system:events=gpf+abort+traceassert+corruptcache Mode150
+            [2023-05-17T02:59:48.565Z] JVM_OPTIONS:  -Xdump:system:none -Xdump:heap:none -Xdump:system:events=gpf+abort+traceassert+corruptcache -XX:+UseCompressedOops 
+
+            [2023-05-17T03:25:52.495Z] TEST: java/util/ResourceBundle/modules/basic/BasicTest.java
+
+            [2023-05-17T03:25:52.497Z] TEST RESULT: Error. Agent error: java.lang.Exception: Agent 11 timed out with a timeout of 960 seconds; check console log for any additional details
+            [2023-05-17T03:25:52.497Z] --------------------------------------------------
+            [2023-05-17T03:25:52.497Z] Test results: passed: 921; error: 1
+            [2023-05-17T03:26:08.397Z] Report written to /home/jenkins/workspace/Test_openjdk20_j9_sanity.openjdk_aarch64_linux_testList_0/aqa-tests/TKG/output_16842900355049/jdk_util_0/report/html/report.html
+            [2023-05-17T03:26:08.397Z] Results written to /home/jenkins/workspace/Test_openjdk20_j9_sanity.openjdk_aarch64_linux_testList_0/aqa-tests/TKG/output_16842900355049/jdk_util_0/work
+            [2023-05-17T03:26:08.397Z] Error: Some tests failed or other problems occurred.
+            [2023-05-17T03:26:08.397Z] -----------------------------------
+            [2023-05-17T03:26:08.397Z] jdk_util_0_FAILED",
+        "reasoning": ""
+    },
+    {
+        "pr": "17403",
+        "goodSHA": "400ef3e9cc72f056d180b672fc61c6cf9914bc52",
+        "badSHA": "7806354",
+        "culprit_SHA": "a8f7e01e672c62deb743f0c0ce291110994d2305",
+        "failure_logs": "Warning: dump file was produced by a different, possibly incompatible, VM.
+                core file: (unknown)
+                this VM:   Eclipse OpenJ9 VM
+
+                For a list of commands, type "help"; for how to use "help", type "help help"
+                Available contexts (* = currently selected context) : 
+
+                Source : file:///home/peter/Downloads/system_test_output (3)/aqa-tests/TKG/output_16837953089620/SharedClasses.SCM23.MultiThreadMultiCL_1/20230511-100236-SharedClasses/results/core.20230511.120738.20709882.0001.dmp
+                    *0 : PID: 0 : JRE level unknown
+                
+                Some system properties are unavailable in that core file (via instrumented build):
+
+                Corrupt system property #0 @ 0x00000100101E1EC0: name @ 0x090000001C505070, value @ 0x090000001C505090
+                Corrupt system property #1 @ 0x00000100101E1EE0: name @ 0x090000001C505094, value @ 0x090000001C505090
+                Corrupt system property #2 @ 0x00000100101E1F00: name @ 0x090000001C5050B0, value @ 0x090000001C5050C4
+                Corrupt system property #3 @ 0x00000100101E1F20: name @ 0x090000001C5050CC, value @ 0x090000001C5050D8
+                Corrupt system property #4 @ 0x00000100101E1F40: name @ 0x090000001C5050E8, value @ 0x090000001C5050F8
+                Corrupt system property #5 @ 0x00000100101E1F60: name @ 0x090000001C505118, value @ 0x090000001C5050D8
+                [...snip...]
+                According to info mmap, those addresses point within libj9vm29.so:
+
+                    /home/jenkins/workspace/Test_openjdk11_j9_extended.system_ppc64_aix_Nightly_testList_2/openjdkbinary/j2sdk-image/lib/default/libj9vm29.so @ 0x0, sections:
+                    0x90000001c25b000 - 0x90000001c5d63ac, name: ".text", size: 0x37b3ac
+                    0x9001000a118b77c - 0x9001000a11d1f70, name: ".data", size: 0x467f4",
+        "reasoning": ""
+    },
+    {
+        "pr": "14432",
+        "goodSHA": "dddb90f4e60f0bd234afc5e6217b75225045231c",
+        "badSHA": "a2375a8ca",
+        "culprit_SHA": "7ac31098798693488264f994fe2a90ea07d33d0d",
+        "failure_logs": "Given the following premain class (and Premain-Class: com.test.PreMain in the manifest):
+
+                package com.test;
+
+                import java.lang.instrument.Instrumentation;
+                import java.util.Map;
+                import java.util.Set;
+
+                public class PreMain {
+                public static void premain(String agentArgs, Instrumentation instrumentation) {
+                    instrumentation.redefineModule(
+                        Object.class.getModule(), Set.of(PreMain.class.getModule()), Map.of(), Map.of(), Set.of(), Map.of()
+                    );
+                }
+                }
+                Running with java -Xtrace:print=module -javaagent:test.jar crashes the JVM.
+
+                GDB where output:
+
+                #12 <signal handler called>
+                #13 0x00007f3267f90b39 in trcModulesAddReadsModule (j9ToMod=0x0, j9FromMod=0x7f32600c5a68, toModule=0x11fa50, currentThread=0x21f00)
+                    at openj9/runtime/j9vm/java11vmi.c:1103
+                #14 JVM_AddReadsModule (env=0x21f00, fromModule=<optimized out>, toModule=0x11fa50) at openj9/runtime/j9vm/java11vmi.c:1159
+                #15 0x00007f324c04a9b7 in Java_java_lang_Module_addReads0 (env=0x21f00, cls=0x78230, from=0x11fa58, to=0x11fa50) at src/java.base/share/native/libjava/Module.c:45
+                Slightly different trace happens if the unnamed module != ALL_UNNAMED, in which case j9ToMod is not null, but j9ToMod->moduleName is null, thus crashing inside copyStringToUTF8WithMemAlloc instead.",
+        "reasoning": ""
+    },
+    {
+        "pr": "16897",
+        "goodSHA": "da73859ec07b69f2267e9e976d604392adbd9d73",
+        "badSHA": "85fe1846d45",
+        "culprit_SHA": "c7a7c5ada96d2d6ad5619eb3efcc3024b63b3264, e5c794a61a20795e1bbab4fb1e11b19c04b64e80",
+        "failure_logs": "22:23:59  ===============================================
+                22:23:59  Running test jdk_vector_float128_j9_0 ...
+                22:23:59  ===============================================
+                22:23:59  jdk_vector_float128_j9_0 Start Time: Fri Mar 10 03:23:58 2023 Epoch Time (ms): 1678418638668
+                22:23:59  variation: -Xjit:{*Float128VectorTests*}(count=1,enforceVectorAPIExpansion),disableAsyncCompilation,disableSuffixLogs,verbose={vectorAPI}
+                22:23:59  JVM_OPTIONS:  -Xjit:{*Float128VectorTests*}(count=1,enforceVectorAPIExpansion),disableAsyncCompilation,disableSuffixLogs,verbose={vectorAPI} 
+
+                22:25:28  TEST: jdk/incubator/vector/Float128VectorTests.java
+
+                22:25:28  Assertion failed at /home/jenkins/workspace/Build_JDK19_aarch64_linux_Nightly/omr/compiler/il/OMRDataTypes_inlines.hpp:238: isVector() || isMask()
+                22:25:28  VMState: 0x0005ff04
+                22:25:28  	getVectorLength() is called on non-vector and non-mask type
+                22:25:28  
+                22:25:28  compiling Float128VectorTests.EQFloat128VectorTests(Ljava/util/function/IntFunction;Ljava/util/function/IntFunction;)V at level: scorching
+
+                22:25:28  Unhandled exception
+                22:25:28  Type=Unhandled trap vmState=0x0005ff04
+                22:25:28  J9Generic_Signal_Number=00000108 Signal_Number=00000005 Error_Value=00000000 Signal_Code=fffffffa
+                22:25:28  Handler1=0000FFFFADA94754 Handler2=0000FFFFAD9FBAC0
+                22:25:28  R0=0000000000000000 R1=0000FFFF8E193DD8 R2=0000000000000000 R3=0000000000000008
+                22:25:28  R4=0000000000000000 R5=0000FFFFAE1E3000 R6=FFFFFFFFFFFFFFFF R7=FFFFFFFFFFFFFFFF
+                22:25:28  R8=0000000000000087 R9=0000FFFF8E193FB0 R10=FFFFFFFFFFFFFFFF R11=FFFFFFFFFFFFFFFF
+                22:25:28  R12=FFFFFFFFFFFFFFFF R13=FFFFFFFFFFFFFFFF R14=FFFFFFFFFFFFFFFF R15=FFFFFFFFFFFFFFFF
+                22:25:28  R16=FFFFFFFFFFFFFFFF R17=FFFFFFFFFFFFFFFF R18=FFFFFFFFFFFFFFFF R19=FFFFFFFFFFFFFFFF
+                22:25:28  R20=0000FFFFACF07938 R21=0000FFFF8D954330 R22=00000000FFFFFFFF R23=0000FFFF8D954330
+                22:25:28  R24=0000FFFF8DE22490 R25=0000FFFF8E195458 R26=0000FFFFACED3000 R27=0000FFFF8D09FB60
+                22:25:28  R28=0000000000000000 R29=0000FFFF8E193DB0 R30=0000FFFF8E193DD8 R31=0000FFFF8E193DB0
+                22:25:28  PC=0000FFFFAE1CB7D8 SP=0000FFFF8E193DB0 PSTATE=0000000000001000
+                22:25:28  V0 2525252525252525 (f: 623191360.000000, d: 9.532824e-130)
+                22:25:28  V1 0a7325203a642523 (f: 979641664.000000, d: 2.490346e-258)
+                22:25:28  V2 2073616820474643 (f: 541541952.000000, d: 2.312741e-152)
+                22:25:28  V3 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:25:28  V4 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:25:28  V5 0000040000000400 (f: 1024.000000, d: 2.172924e-311)
+                22:25:28  V6 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:25:28  V7 4010040140100401 (f: 1074791424.000000, d: 4.003911e+00)
+                22:25:28  V8 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:25:28  V9 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:25:28  V10 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:25:28  V11 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:25:28  V12 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:25:28  V13 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:25:28  V14 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:25:28  V15 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:25:28  V16 0000000055550404 (f: 1431634944.000000, d: 7.073216e-315)
+                22:25:28  V17 00000000a8000000 (f: 2818572288.000000, d: 1.392560e-314)
+                22:25:28  V18 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:25:28  V19 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:25:28  V20 3fb1eb851eb851ec (f: 515396064.000000, d: 7.000000e-02)
+                22:25:28  V21 0000000000000008 (f: 8.000000, d: 3.952525e-323)
+                22:25:28  V22 3f0000003f800000 (f: 1065353216.000000, d: 3.051759e-05)
+                22:25:28  V23 3fc999999999999a (f: 2576980480.000000, d: 2.000000e-01)
+                22:25:28  V24 3fd6666666666666 (f: 1717986944.000000, d: 3.500000e-01)
+                22:25:28  V25 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:25:28  V26 3fb999999999999a (f: 2576980480.000000, d: 1.000000e-01)
+                22:25:28  V27 0000000000000300 (f: 768.000000, d: 3.794424e-321)
+                22:25:28  V28 0000000000000800 (f: 2048.000000, d: 1.011846e-320)
+                22:25:28  V29 0000000000000300 (f: 768.000000, d: 3.794424e-321)
+                22:25:28  V30 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:25:28  V31 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:25:28  Module=/lib/aarch64-linux-gnu/libpthread.so.0
+                22:25:28  Module_base_address=0000FFFFAE1B8000 Symbol=raise
+                22:25:28  Symbol_address=0000FFFFAE1CB6F8
+                22:25:28  
+                22:25:28  Method_being_compiled=Float128VectorTests.EQFloat128VectorTests(Ljava/util/function/IntFunction;Ljava/util/function/IntFunction;)V
+                22:25:28  Target=2_90_20230310_197 (Linux 5.4.0-144-generic)
+                22:25:28  CPU=aarch64 (8 logical CPUs) (0x1eff7f000 RAM)
+                22:25:28  ----------- Stack Backtrace -----------
+                22:25:28  raise+0xe0 (0x0000FFFFAE1CB7D8 [libpthread.so.0+0x137d8])
+                22:25:28  _ZN2TR4trapEv+0x4c (0x0000FFFFAC914F5C [libj9jit29.so+0x440f5c])
+                22:25:28  _ZN2TR27fatal_assertion_with_detailERKNS_16AssertionContextEPKciS4_S4_z+0x0 (0x0000FFFFAC914FD4 [libj9jit29.so+0x440fd4])
+                22:25:28  _ZN3OMR5ARM6413TreeEvaluator20mToLongBitsEvaluatorEPN2TR4NodeEPNS2_13CodeGeneratorE+0x58 (0x0000FFFFACC70D88 [libj9jit29.so+0x79cd88])
+                22:25:28  _ZN3OMR13CodeGenerator8evaluateEPN2TR4NodeE+0x50 (0x0000FFFFAC8A0170 [libj9jit29.so+0x3cc170])
+                22:25:28  _ZN3OMR5ARM6413TreeEvaluator18iRegStoreEvaluatorEPN2TR4NodeEPNS2_13CodeGeneratorE+0x24 (0x0000FFFFACC78F48 [libj9jit29.so+0x7a4f48])
+                22:25:28  _ZN3OMR13CodeGenerator8evaluateEPN2TR4NodeE+0x50 (0x0000FFFFAC8A0170 [libj9jit29.so+0x3cc170])
+                22:25:28  _ZN2J913CodeGenerator22doInstructionSelectionEv+0x97c (0x0000FFFFAC5AF56C [libj9jit29.so+0xdb56c])
+                22:25:28  _ZN3OMR12CodeGenPhase32performInstructionSelectionPhaseEPN2TR13CodeGeneratorEPNS1_12CodeGenPhaseE+0x70 (0x0000FFFFAC8ACFE0 [libj9jit29.so+0x3d8fe0])
+                22:25:28  _ZN3OMR12CodeGenPhase10performAllEv+0xf4 (0x0000FFFFAC8ADC54 [libj9jit29.so+0x3d9c54])
+                22:25:28  _ZN3OMR13CodeGenerator12generateCodeEv+0x60 (0x0000FFFFAC8A9400 [libj9jit29.so+0x3d5400])
+                22:25:28  _ZN3OMR11Compilation7compileEv+0x65c (0x0000FFFFAC8D1D0C [libj9jit29.so+0x3fdd0c])
+                22:25:28  _ZN2TR28CompilationInfoPerThreadBase7compileEP10J9VMThreadPNS_11CompilationEP17TR_ResolvedMethodR11TR_J9VMBaseP19TR_OptimizationPlanRKNS_16SegmentAllocatorE+0x3ec (0x0000FFFFAC5E1F40 [libj9jit29.so+0x10df40])
+                22:25:28  _ZN2TR28CompilationInfoPerThreadBase14wrappedCompileEP13J9PortLibraryPv+0x2e4 (0x0000FFFFAC5E2C68 [libj9jit29.so+0x10ec68])
+                22:25:28  omrsig_protect+0x21c (0x0000FFFFAD9FC74C [libj9prt29.so+0x2874c])
+                22:25:28  _ZN2TR28CompilationInfoPerThreadBase7compileEP10J9VMThreadP21TR_MethodToBeCompiledRN2J917J9SegmentProviderE+0x2c0 (0x0000FFFFAC5E0E44 [libj9jit29.so+0x10ce44])
+                22:25:28  _ZN2TR24CompilationInfoPerThread12processEntryER21TR_MethodToBeCompiledRN2J917J9SegmentProviderE+0x16c (0x0000FFFFAC5E1340 [libj9jit29.so+0x10d340])
+                22:25:28  _ZN2TR24CompilationInfoPerThread14processEntriesEv+0x2bc (0x0000FFFFAC5E023C [libj9jit29.so+0x10c23c])
+                22:25:28  _ZN2TR24CompilationInfoPerThread3runEv+0x6c (0x0000FFFFAC5E0560 [libj9jit29.so+0x10c560])
+                22:25:28  _Z30protectedCompilationThreadProcP13J9PortLibraryPN2TR24CompilationInfoPerThreadE+0x7c (0x0000FFFFAC5E05EC [libj9jit29.so+0x10c5ec])
+                22:25:28  omrsig_protect+0x21c (0x0000FFFFAD9FC74C [libj9prt29.so+0x2874c])
+                22:25:28  _Z21compilationThreadProcPv+0x148 (0x0000FFFFAC5E09B8 [libj9jit29.so+0x10c9b8])
+                22:25:28  thread_wrapper+0xcc (0x0000FFFFAD9AA3BC [libj9thr29.so+0x73bc])
+                22:25:28  start_thread+0x184 (0x0000FFFFAE1BF624 [libpthread.so.0+0x7624])
+                22:25:28   (0x0000FFFFAE10249C [libc.so.6+0xd149c])
+                22:25:28  ---------------------------------------
+                22:25:28  JVMDUMP039I Processing dump event "gpf", detail "" at 2023/03/10 03:25:17 - please wait.
+
+                22:25:28  Assertion failed at /home/jenkins/workspace/Build_JDK19_aarch64_linux_Nightly/omr/compiler/il/OMRDataTypes_inlines.hpp:238: isVector() || isMask()
+                22:25:28  VMState: 0x0005ff04
+                22:25:28  	getVectorLength() is called on non-vector and non-mask type
+                22:25:28  
+                22:25:28  compiling Float128VectorTests.EQFloat128VectorTests(Ljava/util/function/IntFunction;Ljava/util/function/IntFunction;)V at level: scorching
+
+                22:25:28  TEST RESULT: Failed. Unexpected exit from test [exit code: 255]
+                22:25:28  --------------------------------------------------
+                22:25:28  Test results: failed: 1
+                22:25:34  Report written to /home/jenkins/workspace/Test_openjdk19_j9_sanity.openjdk_aarch64_linux_Nightly/aqa-tests/TKG/output_16784150454124/jdk_vector_float128_j9_0/report/html/report.html
+                22:25:34  Results written to /home/jenkins/workspace/Test_openjdk19_j9_sanity.openjdk_aarch64_linux_Nightly/aqa-tests/TKG/output_16784150454124/jdk_vector_float128_j9_0/work
+                22:25:34  Error: Some tests failed or other problems occurred.
+                22:25:34  -----------------------------------
+                22:25:34  jdk_vector_float128_j9_0_FAILED
+
+                22:25:34  ===============================================
+                22:25:34  Running test jdk_vector_double128_j9_0 ...
+                22:25:34  ===============================================
+                22:25:34  jdk_vector_double128_j9_0 Start Time: Fri Mar 10 03:25:34 2023 Epoch Time (ms): 1678418734663
+                22:25:34  variation: -Xjit:{*Double128VectorTests*}(count=1,enforceVectorAPIExpansion),disableAsyncCompilation,disableSuffixLogs,verbose={vectorAPI}
+                22:25:34  JVM_OPTIONS:  -Xjit:{*Double128VectorTests*}(count=1,enforceVectorAPIExpansion),disableAsyncCompilation,disableSuffixLogs,verbose={vectorAPI} 
+
+                22:26:55  TEST: jdk/incubator/vector/Double128VectorTests.java
+
+                22:26:55  Assertion failed at /home/jenkins/workspace/Build_JDK19_aarch64_linux_Nightly/omr/compiler/il/OMRDataTypes_inlines.hpp:238: isVector() || isMask()
+                22:26:55  VMState: 0x0005ff04
+                22:26:55  	getVectorLength() is called on non-vector and non-mask type
+
+                22:26:55  Unhandled exception
+                22:26:55  Type=Unhandled trap vmState=0x0005ff04
+                22:26:55  J9Generic_Signal_Number=00000108 Signal_Number=00000005 Error_Value=00000000 Signal_Code=fffffffa
+                22:26:55  Handler1=0000FFFF81959754 Handler2=0000FFFF818C0AC0
+                22:26:55  R0=0000000000000000 R1=0000FFFF62054DD8 R2=0000000000000000 R3=0000000000000008
+                22:26:55  R4=0000000000000000 R5=0000FFFF820A8000 R6=FFFFFFFFFFFFFFFF R7=FFFFFFFFFFFFFFFF
+                22:26:55  R8=0000000000000087 R9=0000FFFF62054FB0 R10=FFFFFFFFFFFFFFFF R11=FFFFFFFFFFFFFFFF
+                22:26:55  R12=FFFFFFFFFFFFFFFF R13=FFFFFFFFFFFFFFFF R14=FFFFFFFFFFFFFFFF R15=FFFFFFFFFFFFFFFF
+                22:26:55  R16=FFFFFFFFFFFFFFFF R17=FFFFFFFFFFFFFFFF R18=FFFFFFFFFFFFFFFF R19=FFFFFFFFFFFFFFFF
+                22:26:55  R20=0000FFFF80DCC938 R21=0000FFFF61826FF0 R22=00000000FFFFFFFF R23=0000FFFF61826FF0
+                22:26:55  R24=0000FFFF61CCFA70 R25=0000FFFF62056458 R26=0000FFFF80D98000 R27=0000FFFF60F60B60
+                22:26:55  R28=0000000000000000 R29=0000FFFF62054DB0 R30=0000FFFF62054DD8 R31=0000FFFF62054DB0
+                22:26:55  PC=0000FFFF820907D8 SP=0000FFFF62054DB0 PSTATE=0000000000001000
+                22:26:55  V0 2525252525252525 (f: 623191360.000000, d: 9.532824e-130)
+                22:26:55  V1 0a7325203a642523 (f: 979641664.000000, d: 2.490346e-258)
+                22:26:55  V2 2073616820474643 (f: 541541952.000000, d: 2.312741e-152)
+                22:26:55  V3 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:26:55  V4 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:26:55  V5 0000040000000400 (f: 1024.000000, d: 2.172924e-311)
+                22:26:55  V6 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:26:55  V7 4010040140100401 (f: 1074791424.000000, d: 4.003911e+00)
+                22:26:55  V8 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:26:55  V9 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:26:55  V10 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:26:55  V11 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:26:55  V12 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:26:55  V13 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:26:55  V14 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:26:55  V15 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:26:55  V16 0000000055550404 (f: 1431634944.000000, d: 7.073216e-315)
+                22:26:55  V17 00000000a8000000 (f: 2818572288.000000, d: 1.392560e-314)
+                22:26:55  V18 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:26:55  V19 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:26:55  V20 3fb1eb851eb851ec (f: 515396064.000000, d: 7.000000e-02)
+                22:26:55  V21 0000000000000008 (f: 8.000000, d: 3.952525e-323)
+                22:26:55  V22 3f0000003f800000 (f: 1065353216.000000, d: 3.051759e-05)
+                22:26:55  V23 3fc999999999999a (f: 2576980480.000000, d: 2.000000e-01)
+                22:26:55  V24 3fd6666666666666 (f: 1717986944.000000, d: 3.500000e-01)
+                22:26:55  V25 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:26:55  V26 3fb999999999999a (f: 2576980480.000000, d: 1.000000e-01)
+                22:26:55  V27 0000000000000300 (f: 768.000000, d: 3.794424e-321)
+                22:26:55  V28 0000000000000800 (f: 2048.000000, d: 1.011846e-320)
+                22:26:55  V29 0000000000000300 (f: 768.000000, d: 3.794424e-321)
+                22:26:55  V30 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:26:55  V31 0000000000000000 (f: 0.000000, d: 0.000000e+00)
+                22:26:55  Module=/lib/aarch64-linux-gnu/libpthread.so.0
+                22:26:55  Module_base_address=0000FFFF8207D000 Symbol=raise
+                22:26:55  Symbol_address=0000FFFF820906F8
+                22:26:55  
+                22:26:55  Method_being_compiled=Double128VectorTests.EQDouble128VectorTests(Ljava/util/function/IntFunction;Ljava/util/function/IntFunction;)V
+                22:26:55  Target=2_90_20230310_197 (Linux 5.4.0-144-generic)
+                22:26:55  CPU=aarch64 (8 logical CPUs) (0x1eff7f000 RAM)
+                22:26:55  ----------- Stack Backtrace -----------
+                22:26:55  raise+0xe0 (0x0000FFFF820907D8 [libpthread.so.0+0x137d8])
+                22:26:55  _ZN2TR4trapEv+0x4c (0x0000FFFF807D9F5C [libj9jit29.so+0x440f5c])
+                22:26:55  _ZN2TR27fatal_assertion_with_detailERKNS_16AssertionContextEPKciS4_S4_z+0x0 (0x0000FFFF807D9FD4 [libj9jit29.so+0x440fd4])
+                22:26:55  _ZN3OMR5ARM6413TreeEvaluator20mToLongBitsEvaluatorEPN2TR4NodeEPNS2_13CodeGeneratorE+0x58 (0x0000FFFF80B35D88 [libj9jit29.so+0x79cd88])
+                22:26:55  _ZN3OMR13CodeGenerator8evaluateEPN2TR4NodeE+0x50 (0x0000FFFF80765170 [libj9jit29.so+0x3cc170])
+                22:26:55  _ZN3OMR5ARM6413TreeEvaluator18iRegStoreEvaluatorEPN2TR4NodeEPNS2_13CodeGeneratorE+0x24 (0x0000FFFF80B3DF48 [libj9jit29.so+0x7a4f48])
+                22:26:55  _ZN3OMR13CodeGenerator8evaluateEPN2TR4NodeE+0x50 (0x0000FFFF80765170 [libj9jit29.so+0x3cc170])
+                22:26:55  _ZN2J913CodeGenerator22doInstructionSelectionEv+0x97c (0x0000FFFF8047456C [libj9jit29.so+0xdb56c])
+                22:26:55  _ZN3OMR12CodeGenPhase32performInstructionSelectionPhaseEPN2TR13CodeGeneratorEPNS1_12CodeGenPhaseE+0x70 (0x0000FFFF80771FE0 [libj9jit29.so+0x3d8fe0])
+                22:26:55  _ZN3OMR12CodeGenPhase10performAllEv+0xf4 (0x0000FFFF80772C54 [libj9jit29.so+0x3d9c54])
+                22:26:55  _ZN3OMR13CodeGenerator12generateCodeEv+0x60 (0x0000FFFF8076E400 [libj9jit29.so+0x3d5400])
+                22:26:55  _ZN3OMR11Compilation7compileEv+0x65c (0x0000FFFF80796D0C [libj9jit29.so+0x3fdd0c])
+                22:26:55  _ZN2TR28CompilationInfoPerThreadBase7compileEP10J9VMThreadPNS_11CompilationEP17TR_ResolvedMethodR11TR_J9VMBaseP19TR_OptimizationPlanRKNS_16SegmentAllocatorE+0x3ec (0x0000FFFF804A6F40 [libj9jit29.so+0x10df40])
+                22:26:55  _ZN2TR28CompilationInfoPerThreadBase14wrappedCompileEP13J9PortLibraryPv+0x2e4 (0x0000FFFF804A7C68 [libj9jit29.so+0x10ec68])
+                22:26:55  omrsig_protect+0x21c (0x0000FFFF818C174C [libj9prt29.so+0x2874c])
+                22:26:55  _ZN2TR28CompilationInfoPerThreadBase7compileEP10J9VMThreadP21TR_MethodToBeCompiledRN2J917J9SegmentProviderE+0x2c0 (0x0000FFFF804A5E44 [libj9jit29.so+0x10ce44])
+                22:26:55  _ZN2TR24CompilationInfoPerThread12processEntryER21TR_MethodToBeCompiledRN2J917J9SegmentProviderE+0x16c (0x0000FFFF804A6340 [libj9jit29.so+0x10d340])
+                22:26:55  _ZN2TR24CompilationInfoPerThread14processEntriesEv+0x2bc (0x0000FFFF804A523C [libj9jit29.so+0x10c23c])
+                22:26:55  _ZN2TR24CompilationInfoPerThread3runEv+0x6c (0x0000FFFF804A5560 [libj9jit29.so+0x10c560])
+                22:26:55  _Z30protectedCompilationThreadProcP13J9PortLibraryPN2TR24CompilationInfoPerThreadE+0x7c (0x0000FFFF804A55EC [libj9jit29.so+0x10c5ec])
+                22:26:55  omrsig_protect+0x21c (0x0000FFFF818C174C [libj9prt29.so+0x2874c])
+                22:26:55  _Z21compilationThreadProcPv+0x148 (0x0000FFFF804A59B8 [libj9jit29.so+0x10c9b8])
+                22:26:55  thread_wrapper+0xcc (0x0000FFFF8186F3BC [libj9thr29.so+0x73bc])
+                22:26:55  start_thread+0x184 (0x0000FFFF82084624 [libpthread.so.0+0x7624])
+                22:26:55   (0x0000FFFF81FC749C [libc.so.6+0xd149c])
+                22:26:55  ---------------------------------------
+                22:26:55  JVMDUMP039I Processing dump event "gpf", detail "" at 2023/03/10 03:26:49 - please wait.
+
+                22:26:55  Assertion failed at /home/jenkins/workspace/Build_JDK19_aarch64_linux_Nightly/omr/compiler/il/OMRDataTypes_inlines.hpp:238: isVector() || isMask()
+                22:26:55  VMState: 0x0005ff04
+                22:26:55  	getVectorLength() is called on non-vector and non-mask type
+
+                22:26:55  TEST RESULT: Failed. Unexpected exit from test [exit code: 255]
+                22:26:55  --------------------------------------------------
+                22:26:55  Test results: failed: 1
+                22:27:08  Report written to /home/jenkins/workspace/Test_openjdk19_j9_sanity.openjdk_aarch64_linux_Nightly/aqa-tests/TKG/output_16784150454124/jdk_vector_double128_j9_0/report/html/report.html
+                22:27:08  Results written to /home/jenkins/workspace/Test_openjdk19_j9_sanity.openjdk_aarch64_linux_Nightly/aqa-tests/TKG/output_16784150454124/jdk_vector_double128_j9_0/work
+                22:27:08  Error: Some tests failed or other problems occurred.
+                22:27:08  -----------------------------------
+                22:27:08  jdk_vector_double128_j9_0_FAILED",
+        "reasoning": ""
+    },
+    {
+        "pr": "16603",
+        "goodSHA": "0118c9c5e55941add0850697443958f0aab76507",
+        "badSHA": "9a84ec34e",
+        "culprit_SHA": "25ce835b36b94a4e29ce1fbb68820f891dea1058",
+        "failure_logs": "jdk_lang_0
+            java/lang/ClassLoader/securityManager/ClassLoaderTest.java
+
+            20:42:07  java.util.zip.ZipException: invalid entry compressed size (expected 487 but got 486 bytes)
+            20:42:07  	at java.base/java.util.zip.ZipOutputStream.closeEntry(ZipOutputStream.java:268)
+            20:42:07  	at java.base/java.util.zip.ZipOutputStream.putNextEntry(ZipOutputStream.java:193)
+            20:42:07  	at java.base/java.util.jar.JarOutputStream.putNextEntry(JarOutputStream.java:109)
+            20:42:07  	at jdk.test.lib.util.JarUtils.updateJarFile(JarUtils.java:169)
+            20:42:07  	at jdk.test.lib.util.JarUtils.updateJarFile(JarUtils.java:184)
+            20:42:07  	at ClassLoaderTest.updateModuleDescr(ClassLoaderTest.java:295)
+            20:42:07  	at ClassLoaderTest.setUp(ClassLoaderTest.java:274)
+            20:42:07  	at ClassLoaderTest.main(ClassLoaderTest.java:161)
+            20:42:07  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+            20:42:07  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+            20:42:07  	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+            20:42:07  	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+            20:42:07  	at com.sun.javatest.regtest.agent.MainActionHelper$AgentVMRunnable.run(MainActionHelper.java:298)
+            20:42:07  	at java.base/java.lang.Thread.run(Thread.java:871)
+            20:42:07  	Suppressed: java.util.zip.ZipException: invalid entry compressed size (expected 487 but got 486 bytes)
+            20:42:07  		at java.base/java.util.zip.ZipOutputStream.closeEntry(ZipOutputStream.java:268)
+            20:42:07  		at java.base/java.util.zip.ZipOutputStream.finish(ZipOutputStream.java:361)
+            20:42:07  		at java.base/java.util.zip.DeflaterOutputStream.close(DeflaterOutputStream.java:238)
+            20:42:07  		at java.base/java.util.zip.ZipOutputStream.close(ZipOutputStream.java:378)
+            20:42:07  		at jdk.test.lib.util.JarUtils.updateJarFile(JarUtils.java:152)
+            20:42:07  		... 10 more
+            jdk_lang_1
+            java/lang/ClassLoader/securityManager/ClassLoaderTest.java
+
+            20:56:44  java.util.zip.ZipException: invalid entry compressed size (expected 179 but got 177 bytes)
+            20:56:44  	at java.base/java.util.zip.ZipOutputStream.closeEntry(ZipOutputStream.java:268)
+            20:56:44  	at java.base/java.util.zip.ZipOutputStream.putNextEntry(ZipOutputStream.java:193)
+            20:56:44  	at java.base/java.util.jar.JarOutputStream.putNextEntry(JarOutputStream.java:109)
+            20:56:44  	at jdk.test.lib.util.JarUtils.updateJarFile(JarUtils.java:169)
+            20:56:44  	at jdk.test.lib.util.JarUtils.updateJarFile(JarUtils.java:184)
+            20:56:44  	at ClassLoaderTest.updateModuleDescr(ClassLoaderTest.java:295)
+            20:56:44  	at ClassLoaderTest.setUp(ClassLoaderTest.java:270)
+            20:56:44  	at ClassLoaderTest.main(ClassLoaderTest.java:161)
+            20:56:44  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+            20:56:44  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+            20:56:44  	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+            20:56:44  	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+            20:56:44  	at com.sun.javatest.regtest.agent.MainActionHelper$AgentVMRunnable.run(MainActionHelper.java:298)
+            20:56:44  	at java.base/java.lang.Thread.run(Thread.java:871)
+            20:56:44  	Suppressed: java.util.zip.ZipException: invalid entry compressed size (expected 179 but got 177 bytes)
+            20:56:44  		at java.base/java.util.zip.ZipOutputStream.closeEntry(ZipOutputStream.java:268)
+            20:56:44  		at java.base/java.util.zip.ZipOutputStream.finish(ZipOutputStream.java:361)
+            20:56:44  		at java.base/java.util.zip.DeflaterOutputStream.close(DeflaterOutputStream.java:238)
+            20:56:44  		at java.base/java.util.zip.ZipOutputStream.close(ZipOutputStream.java:378)
+            20:56:44  		at jdk.test.lib.util.JarUtils.updateJarFile(JarUtils.java:152)
+            20:56:44  		... 10 more
+            jdk_util_0, jdk_util_1
+            java/util/zip/ZipFile/CopyJar.java
+
+            21:24:44  java.util.zip.ZipException: invalid entry compressed size (expected 338 but got 395 bytes)
+            21:24:44  	at java.base/java.util.zip.ZipOutputStream.closeEntry(ZipOutputStream.java:268)
+            21:24:44  	at java.base/java.util.zip.ZipOutputStream.finish(ZipOutputStream.java:361)
+            21:24:44  	at java.base/java.util.zip.DeflaterOutputStream.close(DeflaterOutputStream.java:238)
+            21:24:44  	at java.base/java.util.zip.ZipOutputStream.close(ZipOutputStream.java:378)
+            21:24:44  	at CopyJar.main(CopyJar.java:45)
+            21:24:44  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+            21:24:44  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+            21:24:44  	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+            21:24:44  	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+            21:24:44  	at com.sun.javatest.regtest.agent.MainActionHelper$AgentVMRunnable.run(MainActionHelper.java:298)
+            21:24:44  	at java.base/java.lang.Thread.run(Thread.java:871)
+            jdk_util_0, jdk_util_1
+            java/util/zip/DeflateIn_InflateOut.java
+
+            21:25:26  java.lang.Throwable
+            21:25:26  	at java.base/java.lang.Thread.dumpStack(Thread.java:544)
+            21:25:26  	at DeflateIn_InflateOut.fail(DeflateIn_InflateOut.java:235)
+            21:25:26  	at DeflateIn_InflateOut.check(DeflateIn_InflateOut.java:238)
+            21:25:26  	at DeflateIn_InflateOut.SkipBytes(DeflateIn_InflateOut.java:177)
+            21:25:26  	at DeflateIn_InflateOut.realMain(DeflateIn_InflateOut.java:229)
+            21:25:26  	at DeflateIn_InflateOut.main(DeflateIn_InflateOut.java:243)
+            21:25:26  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+            21:25:26  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+            21:25:26  	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+            21:25:26  	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+            21:25:26  	at com.sun.javatest.regtest.agent.MainActionHelper$AgentVMRunnable.run(MainActionHelper.java:298)
+            21:25:26  	at java.base/java.lang.Thread.run(Thread.java:871)
+            21:25:26  java.lang.Throwable
+            21:25:26  	at java.base/java.lang.Thread.dumpStack(Thread.java:544)
+            21:25:26  	at DeflateIn_InflateOut.fail(DeflateIn_InflateOut.java:235)
+            21:25:26  	at DeflateIn_InflateOut.check(DeflateIn_InflateOut.java:238)
+            21:25:26  	at DeflateIn_InflateOut.SkipBytes(DeflateIn_InflateOut.java:195)
+            21:25:26  	at DeflateIn_InflateOut.realMain(DeflateIn_InflateOut.java:229)
+            21:25:26  	at DeflateIn_InflateOut.main(DeflateIn_InflateOut.java:243)
+            21:25:26  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+            21:25:26  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+            21:25:26  	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+            21:25:26  	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+            21:25:26  	at com.sun.javatest.regtest.agent.MainActionHelper$AgentVMRunnable.run(MainActionHelper.java:298)
+            21:25:26  	at java.base/java.lang.Thread.run(Thread.java:871)
+            21:25:26  java.lang.Throwable
+            21:25:26  	at java.base/java.lang.Thread.dumpStack(Thread.java:544)
+            21:25:26  	at DeflateIn_InflateOut.fail(DeflateIn_InflateOut.java:235)
+            21:25:26  	at DeflateIn_InflateOut.check(DeflateIn_InflateOut.java:238)
+            21:25:26  	at DeflateIn_InflateOut.SkipBytes(DeflateIn_InflateOut.java:205)
+            21:25:26  	at DeflateIn_InflateOut.realMain(DeflateIn_InflateOut.java:229)
+            21:25:26  	at DeflateIn_InflateOut.main(DeflateIn_InflateOut.java:243)
+            21:25:26  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+            21:25:26  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+            21:25:26  	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+            21:25:26  	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+            21:25:26  	at com.sun.javatest.regtest.agent.MainActionHelper$AgentVMRunnable.run(MainActionHelper.java:298)
+            21:25:26  	at java.base/java.lang.Thread.run(Thread.java:871)
+            21:25:26  java.lang.Throwable
+            21:25:26  	at java.base/java.lang.Thread.dumpStack(Thread.java:544)
+            21:25:26  	at DeflateIn_InflateOut.fail(DeflateIn_InflateOut.java:235)
+            21:25:26  	at DeflateIn_InflateOut.check(DeflateIn_InflateOut.java:238)
+            21:25:26  	at DeflateIn_InflateOut.SkipBytes(DeflateIn_InflateOut.java:206)
+            21:25:26  	at DeflateIn_InflateOut.realMain(DeflateIn_InflateOut.java:229)
+            21:25:26  	at DeflateIn_InflateOut.main(DeflateIn_InflateOut.java:243)
+            21:25:26  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+            21:25:26  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+            21:25:26  	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+            21:25:26  	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+            21:25:26  	at com.sun.javatest.regtest.agent.MainActionHelper$AgentVMRunnable.run(MainActionHelper.java:298)
+            21:25:26  	at java.base/java.lang.Thread.run(Thread.java:871)
+            jdk11_tier1_pack200_0, jdk11_tier1_pack200_1
+            tools/pack200/PackTestZip64.java
+
+            21:45:35  java.io.IOException: Files are differ starting at position: 36
+            21:45:35  	at PackTestZip64.compareTwoFiles(PackTestZip64.java:117)
+            21:45:35  	at PackTestZip64.testPacking(PackTestZip64.java:89)
+            21:45:35  	at PackTestZip64.main(PackTestZip64.java:48)
+            21:45:35  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+            21:45:35  	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+            21:45:35  	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+            21:45:35  	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+            21:45:35  	at com.sun.javatest.regtest.agent.MainActionHelper$AgentVMRunnable.run(MainActionHelper.java:298)
+            21:45:35  	at java.base/java.lang.Thread.run(Thread.java:871)",
+        "reasoning": ""
+    }
+
+]
